@@ -1,0 +1,23 @@
+:root {
+  --primary-color: rgba(30, 40, 50, 0.05);
+}
+
+body {
+  max-width: 1440px;
+  margin: auto;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--primary-color);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+@media (min-width: 768px) {
+  body {
+    width: 80%;
+  }
+}
