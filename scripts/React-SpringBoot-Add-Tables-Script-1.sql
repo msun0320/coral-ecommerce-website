@@ -20,6 +20,7 @@ CREATE TABLE `product` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `title` varchar(45) DEFAULT NULL,
   `description` text DEFAULT NULL,
+  `price` FLOAT DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `category` varchar(11) DEFAULT NULL,
   `img` varchar(225) DEFAULT NULL,
@@ -29,7 +30,7 @@ CREATE TABLE `product` (
 
 
 INSERT INTO `product` VALUES 
-	(1,'Adicolor Classics Joggers','Lorem ipsum dolor sit amet', 10, 'Women', '~/Desktop/coral-ecommerce-website/frontend/public/images/products/adicolor-classics-joggers.png');
+	(1,'Adicolor Classics Joggers','Lorem ipsum dolor sit amet', 10.99, 10, 'Women', 'images/products/adicolor-classics-joggers.png');
  
 DROP TABLE IF EXISTS `review`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

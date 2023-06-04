@@ -1,6 +1,64 @@
-import { Card } from "./Card";
+import { ProductCard } from "./ProductCard";
+import { useEffect, useState } from "react";
+import ProductModel from "../../../models/ProductModel";
+import { SpinnerLoading } from "../Utils/SpinnerLoading";
 
 export const Carousel = () => {
+  const [products, setProducts] = useState<ProductModel[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [httpError, setHttpError] = useState(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const baseUrl: string = "http://localhost:8080/api/products";
+
+      const url: string = `${baseUrl}?page=0&size=8`;
+
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Something went wrong!");
+      }
+
+      const responseJson = await response.json();
+
+      const responseData = responseJson._embedded.products;
+
+      const loadedProducts: ProductModel[] = [];
+
+      for (const key in responseData) {
+        loadedProducts.push({
+          id: responseData[key].id,
+          title: responseData[key].title,
+          price: responseData[key].price,
+          description: responseData[key].description,
+          quantity: responseData[key].quantity,
+          category: responseData[key].category,
+          img: responseData[key].img,
+        });
+      }
+
+      setProducts(loadedProducts);
+      setIsLoading(false);
+    };
+    fetchProducts().catch((error: any) => {
+      setIsLoading(false);
+      setHttpError(error.message);
+    });
+  }, []);
+
+  if (isLoading) {
+    return <SpinnerLoading />;
+  }
+
+  if (httpError) {
+    return (
+      <div className="container m-5">
+        <p>{httpError}</p>
+      </div>
+    );
+  }
+
   return (
     <div className="py-3 py-md-5">
       <div className="container">
@@ -15,14 +73,30 @@ export const Carousel = () => {
           <div className="carousel-inner">
             <div className="carousel-item active">
               <div className="card-group d-flex rounded-0">
-                <Card />
-                <Card />
+                {products.slice(0, 2).map((product) => (
+                  <ProductCard product={product} key={product.id} />
+                ))}
               </div>
             </div>
             <div className="carousel-item">
               <div className="card-group d-flex">
-                <Card />
-                <Card />
+                {products.slice(2, 4).map((product) => (
+                  <ProductCard product={product} key={product.id} />
+                ))}
+              </div>
+            </div>
+            <div className="carousel-item">
+              <div className="card-group d-flex">
+                {products.slice(4, 6).map((product) => (
+                  <ProductCard product={product} key={product.id} />
+                ))}
+              </div>
+            </div>
+            <div className="carousel-item">
+              <div className="card-group d-flex">
+                {products.slice(6, 8).map((product) => (
+                  <ProductCard product={product} key={product.id} />
+                ))}
               </div>
             </div>
           </div>
@@ -60,18 +134,16 @@ export const Carousel = () => {
           <div className="carousel-inner">
             <div className="carousel-item active">
               <div className="card-group">
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                {products.slice(0, 4).map((product) => (
+                  <ProductCard product={product} key={product.id} />
+                ))}
               </div>
             </div>
             <div className="carousel-item">
               <div className="card-group">
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                {products.slice(4, 8).map((product) => (
+                  <ProductCard product={product} key={product.id} />
+                ))}
               </div>
             </div>
           </div>
