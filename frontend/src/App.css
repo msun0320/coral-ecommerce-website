@@ -65,6 +65,10 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+.product-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 @media (min-width: 576px) {
   .banner img {
     width: 20%;
@@ -79,5 +83,9 @@
 
   .instagram-section .d-grid {
     grid-template-columns: repeat(6, 1fr);
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
