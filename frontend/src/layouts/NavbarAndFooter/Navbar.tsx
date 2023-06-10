@@ -1,4 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
+import logo from "./../../logo.svg";
+import cart from "./../../assets/images/icon-cart.svg";
 
 export const Navbar = () => {
   return (
@@ -16,7 +18,7 @@ export const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <Link className="navbar-brand fs-4" href="#" to="/home">
-          CORAL <img src="images/logo-coral.svg" alt="Coral" />
+          CORAL <img src={logo} alt="Coral" />
         </Link>
         <div
           className="collapse navbar-collapse order-1 order-lg-0 text-center"
@@ -43,7 +45,7 @@ export const Navbar = () => {
           </li>
           <li>
             <a className="nav-link" href="#">
-              <img src="images/icons/icon-cart.svg" alt="Shopping cart" />
+              <img src={cart} alt="Shopping cart" />
             </a>
           </li>
         </ul>

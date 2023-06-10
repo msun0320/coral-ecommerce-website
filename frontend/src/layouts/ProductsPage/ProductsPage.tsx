@@ -122,7 +122,7 @@ export const ProductsPage = () => {
 
   return (
     <div className="py-3">
-      <div className="container row">
+      <div className="container-fluid row">
         <div className="col-12 col-md-3">
           <div className="input-group mb-3">
             <input

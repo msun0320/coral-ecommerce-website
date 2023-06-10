@@ -1,14 +1,18 @@
 import React from "react";
 import ProductModel from "../../../models/ProductModel";
+import { Link } from "react-router-dom";
 
 export const ProductCard: React.FC<{ product: ProductModel }> = (props) => {
   return (
-    <a href="#" className="card border-0 text-decoration-none">
+    <Link
+      to={`/product/${props.product.id}`}
+      className="card border-0 text-decoration-none"
+    >
       {props.product.img ? (
         <img
           src={props.product.img}
           className="card-img-top rounded-0"
-          alt="Adicolor Classics Joggers"
+          alt={props.product.description}
         />
       ) : (
         <img
@@ -23,9 +27,9 @@ export const ProductCard: React.FC<{ product: ProductModel }> = (props) => {
           <small className="text-body-secondary">
             {props.product.category}
           </small>
-          <span>{`$${props.product.price}`}</span>
+          <span>${props.product.price}</span>
         </p>
       </div>
-    </a>
+    </Link>
   );
 };

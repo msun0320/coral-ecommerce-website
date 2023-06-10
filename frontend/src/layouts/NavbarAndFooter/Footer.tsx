@@ -1,3 +1,10 @@
+import logo from "./../../logo.svg";
+import cart from "./../../assets/images/icon-cart.svg";
+import facebook from "./../../assets/images/icon-facebook.svg";
+import twitter from "./../../assets/images/icon-twitter.svg";
+import linkedin from "./../../assets/images/icon-linkedin.svg";
+import instagram from "./../../assets/images/icon-instagram.svg";
+
 export const Footer = () => {
   return (
     <footer className="text-center pt-3 pt-md-5">
@@ -7,7 +14,7 @@ export const Footer = () => {
             <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
               <h6 className="text-uppercase fs-4 fw-bold mb-4">
                 Coral
-                <img src="images/logo-coral.svg" className="ms-2" alt="Coral" />
+                <img src={logo} className="ms-2" alt="Coral" />
               </h6>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -20,7 +27,7 @@ export const Footer = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src="images/icons/icon-facebook.svg" alt="Facebook" />
+                  <img src={facebook} alt="Facebook" />
                 </a>
                 <a
                   href="https://twitter.com/"
@@ -28,7 +35,7 @@ export const Footer = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src="images/icons/icon-twitter.svg" alt="Twitter" />
+                  <img src={twitter} alt="Twitter" />
                 </a>
                 <a
                   href="https://www.linkedin.com/"
@@ -36,7 +43,7 @@ export const Footer = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src="images/icons/icon-linkedin.svg" alt="LinkedIn" />
+                  <img src={linkedin} alt="LinkedIn" />
                 </a>
                 <a
                   href="https://www.instagram.com/"
@@ -44,7 +51,7 @@ export const Footer = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <img src="images/icons/icon-instagram.svg" alt="Instagram" />
+                  <img src={instagram} alt="Instagram" />
                 </a>
               </div>
             </div>
