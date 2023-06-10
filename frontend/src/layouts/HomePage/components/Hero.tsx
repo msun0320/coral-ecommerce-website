@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const Hero = () => {
   return (
     <div className="hero d-flex">
@@ -8,9 +10,9 @@ export const Hero = () => {
             You can explore and shop many differnt collection from various
             brands here.
           </p>
-          <a type="button" className="btn mt-2" href="#">
+          <Link type="button" className="btn mt-2" to="/products">
             Shop Now
-          </a>
+          </Link>
         </div>
         <img
           className="d-none d-md-block"

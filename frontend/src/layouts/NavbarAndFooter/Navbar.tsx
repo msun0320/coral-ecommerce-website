@@ -1,3 +1,5 @@
+import { Link, NavLink } from "react-router-dom";
+
 export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg">
@@ -13,33 +15,23 @@ export const Navbar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <a className="navbar-brand fs-4" href="#">
+        <Link className="navbar-brand fs-4" href="#" to="/home">
           CORAL <img src="images/logo-coral.svg" alt="Coral" />
-        </a>
+        </Link>
         <div
           className="collapse navbar-collapse order-1 order-lg-0 text-center"
           id="navbarSupportedContent"
         >
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item mx-3">
-              <a className="nav-link" href="#">
-                All
-              </a>
+              <NavLink className="nav-link" to="/home">
+                Home
+              </NavLink>
             </li>
             <li className="nav-item mx-3">
-              <a className="nav-link" href="#">
-                Woman
-              </a>
-            </li>
-            <li className="nav-item mx-3">
-              <a className="nav-link" href="#">
-                Man
-              </a>
-            </li>
-            <li className="nav-item mx-3">
-              <a className="nav-link" href="#">
-                Accessories
-              </a>
+              <NavLink className="nav-link" to="/products">
+                Products
+              </NavLink>
             </li>
           </ul>
         </div>
