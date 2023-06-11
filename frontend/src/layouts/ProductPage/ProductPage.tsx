@@ -70,7 +70,7 @@ export const ProductPage = () => {
         loadedReviews.push({
           id: responseData[key].id,
           userId: responseData[key].userId,
-          createAt: responseData[key].createAt,
+          createdAt: responseData[key].createdAt,
           rating: responseData[key].rating,
           productId: responseData[key].productId,
           reviewDescription: responseData[key].reviewDescription,

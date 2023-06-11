@@ -19,9 +19,9 @@ public class Review {
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "create_at")
+    @Column(name = "created_at")
     @CreationTimestamp
-    private Date createAt;
+    private Date createdAt;
 
     @Column(name = "rating")
     private double rating;

@@ -2,7 +2,7 @@ import ReviewModel from "../../models/ReviewModel";
 import { StarsReview } from "./StarsReview";
 
 export const Review: React.FC<{ review: ReviewModel }> = (props) => {
-  const createAt = new Date(props.review.createAt);
+  const createAt = new Date(props.review.createdAt);
 
   const longMonth = createAt.toLocaleString("en-us", { month: "long" });
   const day = createAt.getDate();
