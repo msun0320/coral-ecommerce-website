@@ -1,8 +1,18 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "./../../logo.svg";
 import cart from "./../../assets/images/icon-cart.svg";
+import { useOktaAuth } from "@okta/okta-react";
+import { SpinnerLoading } from "../Utils/SpinnerLoading";
 
 export const Navbar = () => {
+  const { oktaAuth, authState } = useOktaAuth();
+
+  if (!authState) {
+    return <SpinnerLoading />;
+  }
+
+  const handleLogout = async () => oktaAuth.signOut();
+
   return (
     <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
@@ -38,11 +48,19 @@ export const Navbar = () => {
           </ul>
         </div>
         <ul className="navbar-nav ms-auto d-flex flex-row">
-          <li className="nav-item">
-            <a className="nav-link me-3 me-lg-0" href="#">
-              Log in
-            </a>
-          </li>
+          {!authState.isAuthenticated ? (
+            <li className="nav-item">
+              <Link className="nav-link me-3 me-lg-0" to="/login">
+                Sign In
+              </Link>
+            </li>
+          ) : (
+            <li className="nav-item">
+              <button className="nav-link me-3 me-lg-0" onClick={handleLogout}>
+                Sign Out
+              </button>
+            </li>
+          )}
           <li>
             <a className="nav-link" href="#">
               <img src={cart} alt="Shopping cart" />
