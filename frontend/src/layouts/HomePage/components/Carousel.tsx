@@ -1,7 +1,7 @@
 import { ProductCard } from "./ProductCard";
 import { useEffect, useState } from "react";
 import ProductModel from "../../../models/ProductModel";
-import { SpinnerLoading } from "../Utils/SpinnerLoading";
+import { SpinnerLoading } from "../../Utils/SpinnerLoading";
 
 export const Carousel = () => {
   const [products, setProducts] = useState<ProductModel[]>([]);

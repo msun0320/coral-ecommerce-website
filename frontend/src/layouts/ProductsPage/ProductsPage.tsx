@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import ProductModel from "../../models/ProductModel";
-import { SpinnerLoading } from "../HomePage/Utils/SpinnerLoading";
+import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import { ProductCard } from "../HomePage/components/ProductCard";
-import { Pagination } from "../HomePage/Utils/Pagination";
+import { Pagination } from "../Utils/Pagination";
 
 export const ProductsPage = () => {
   const [products, setProducts] = useState<ProductModel[]>([]);

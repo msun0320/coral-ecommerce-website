@@ -1,6 +1,7 @@
 package com.mingyuesun.springbootecommerce.config;
 
 import com.mingyuesun.springbootecommerce.entity.Product;
+import com.mingyuesun.springbootecommerce.entity.Review;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
@@ -23,8 +24,10 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         };
         
         config.exposeIdsFor(Product.class);
+        config.exposeIdsFor(Review.class);
         
         disableHttpMethods(Product.class, config, theUnsupportedActions);
+        disableHttpMethods(Review.class, config, theUnsupportedActions);
 
         /* Configure CORS Mapping */
         cors.addMapping(config.getBasePath() + "/**")
