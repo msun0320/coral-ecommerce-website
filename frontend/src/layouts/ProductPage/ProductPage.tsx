@@ -69,7 +69,7 @@ export const ProductPage = () => {
       for (const key in responseData) {
         loadedReviews.push({
           id: responseData[key].id,
-          userId: responseData[key].userId,
+          userEmail: responseData[key].userEmail,
           createdAt: responseData[key].createdAt,
           rating: responseData[key].rating,
           productId: responseData[key].productId,

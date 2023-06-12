@@ -10,8 +10,8 @@ public class CartItem {
 
     public CartItem() {}
 
-    public CartItem(Long userId, Long productId, int quantity, String createdAt, String updatedAt) {
-        this.userId = userId;
+    public CartItem(String userEmail, Long productId, int quantity, String createdAt, String updatedAt) {
+        this.userEmail = userEmail;
         this.productId = productId;
         this.quantity = quantity;
         this.createdAt = createdAt;
@@ -23,8 +23,8 @@ public class CartItem {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "user_email")
+    private String userEmail;
 
     @Column(name = "product_id")
     private Long productId;

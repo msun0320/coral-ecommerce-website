@@ -16,8 +16,8 @@ public class Review {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "user_email")
+    private Long userEmail;
 
     @Column(name = "created_at")
     @CreationTimestamp

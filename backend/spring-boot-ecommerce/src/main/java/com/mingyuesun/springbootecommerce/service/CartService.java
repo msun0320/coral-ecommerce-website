@@ -23,10 +23,10 @@ public class CartService {
         this.cartItemRepository = cartItemRepository;
     }
 
-    public Product addProduct(Long userId, Long productId, Integer quantity) throws Exception {
+    public Product addProduct(String userEmail, Long productId, Integer quantity) throws Exception {
         Optional<Product> product = productRepository.findById(productId);
 
-        CartItem cartItem = cartItemRepository.findByUserIdAndProductId(userId, productId);
+        CartItem cartItem = cartItemRepository.findByUserEmailAndProductId(userEmail, productId);
 
         if (!product.isPresent() || product.get().getQuantity() <= 0) {
             throw new Exception();
@@ -38,7 +38,7 @@ public class CartService {
         if (cartItem != null) {
             cartItem.setQuantity(cartItem.getQuantity() + quantity);
         } else {
-            cartItem = new CartItem(userId, productId, quantity, LocalDate.now().toString(), LocalDate.now().toString());
+            cartItem = new CartItem(userEmail, productId, quantity, LocalDate.now().toString(), LocalDate.now().toString());
         }
 
         cartItemRepository.save(cartItem);

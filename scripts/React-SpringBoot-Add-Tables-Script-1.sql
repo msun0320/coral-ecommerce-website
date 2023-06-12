@@ -37,7 +37,7 @@ DROP TABLE IF EXISTS `review`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `review` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(45) DEFAULT NULL,
+  `user_email` varchar(45) DEFAULT NULL,
   `created_at` datetime(6) DEFAULT NULL,
   `rating` decimal (3,2) DEFAULT NULL,
   `product_id` BIGINT(20) DEFAULT NULL,
@@ -48,8 +48,8 @@ CREATE TABLE `review` (
 
 
 INSERT INTO `review` VALUES 
-	(1, 1, NOW(), 4, 1, 'Comfy, cool pants'),
-	(2, 2, NOW(), 4.5, 2, 'Great shirts');
+	(1, 'test1@test.com', NOW(), 4, 1, 'Comfy, cool pants'),
+	(2, 'test2@test.com', NOW(), 4.5, 2, 'Great shirts');
     
 
 DROP TABLE IF EXISTS `order`;
@@ -57,7 +57,7 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(45) DEFAULT NULL,
+  `user_email` varchar(45) DEFAULT NULL,
   `total` FLOAT DEFAULT NULL,
   `created_at` datetime(6) DEFAULT NULL,
   `updated_at` datetime(6) DEFAULT NULL,
@@ -67,9 +67,9 @@ CREATE TABLE `order` (
 
 
 -- INSERT INTO `order` VALUES 
--- 	(1, 1, 21.99, NOW(), NOW()),
---     (2, 2, 22.99, NOW(), NOW()),
---     (3, 3, 23.99, NOW(), NOW());
+-- 	(1, 'test1@test.com', 21.99, NOW(), NOW()),
+--     (2, 'test2@test.com', 22.99, NOW(), NOW()),
+--     (3, 3'test3@test.com', 23.99, NOW(), NOW());
 
 
 DROP TABLE IF EXISTS `order_item`;
@@ -97,7 +97,7 @@ DROP TABLE IF EXISTS `cart_item`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cart_item` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(45) DEFAULT NULL,
+  `user_email` varchar(45) DEFAULT NULL,
   `product_id` varchar(45) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `created_at` datetime(6) DEFAULT NULL,
@@ -107,9 +107,9 @@ CREATE TABLE `cart_item` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 -- INSERT INTO `cart_item` VALUES 
--- 	(1, 1, 1, 1, NOW(), NOW()),
---     (2, 2, 2, 2, NOW(), NOW()),
---     (3, 3, 3, 1, NOW(), NOW());
+-- 	(1, 'test1@test.com', 1, 1, NOW(), NOW()),
+--     (2, 'test2@test.com', 2, 2, NOW(), NOW()),
+--     (3, 'test3@test.com', 3, 1, NOW(), NOW());
 
 
 UNLOCK TABLES;

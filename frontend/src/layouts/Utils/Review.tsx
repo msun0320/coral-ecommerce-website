@@ -12,7 +12,7 @@ export const Review: React.FC<{ review: ReviewModel }> = (props) => {
 
   return (
     <div>
-      <h5>{props.review.userId}</h5>
+      <h5>{props.review.userEmail}</h5>
       <StarsReview rating={props.review.rating} size={16} />
       <h6>{createAtRender}</h6>
       <p>{props.review.reviewDescription}</p>
