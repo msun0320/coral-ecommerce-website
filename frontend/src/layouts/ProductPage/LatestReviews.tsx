@@ -7,9 +7,11 @@ export const LatestReviews: React.FC<{
   productId: number | undefined;
 }> = (props) => {
   return (
-    <div>
-      <h3>Latest Reviews: </h3>
-      <div>
+    <div className="row">
+      <div className="col-lg-2">
+        <h3>Latest Reviews: </h3>
+      </div>
+      <div className="col-lg-10">
         {props.reviews.length > 0 ? (
           <>
             {props.reviews.slice(0, 3).map((eachReview) => (

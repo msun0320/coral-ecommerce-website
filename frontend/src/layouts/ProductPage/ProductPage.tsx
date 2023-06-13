@@ -5,6 +5,8 @@ import { StarsReview } from "../Utils/StarsReview";
 import ReviewModel from "../../models/ReviewModel";
 import { LatestReviews } from "./LatestReviews";
 import { useOktaAuth } from "@okta/okta-react";
+import { LeaveAReview } from "../Utils/LeaveAReview";
+import ReviewRequestModel from "../../models/ReviewRequestModel";
 
 export const ProductPage = () => {
   const { authState } = useOktaAuth();
@@ -18,6 +20,8 @@ export const ProductPage = () => {
   const [reviews, setReviews] = useState<ReviewModel[]>([]);
   const [totalStars, setTotalStars] = useState(0);
   const [isLoadingReview, setIsLoadingReview] = useState(true);
+
+  const [isReviewLeft, setIsReviewLeft] = useState(false);
 
   const productId = window.location.pathname.split("/")[2];
 
@@ -97,7 +101,7 @@ export const ProductPage = () => {
       setIsLoadingReview(false);
       setHttpError(error.message);
     });
-  }, []);
+  }, [isReviewLeft]);
 
   if (isLoading || isLoadingReview) {
     return <SpinnerLoading />;
@@ -124,6 +128,40 @@ export const ProductPage = () => {
     if (!addToCartResponse.ok) {
       throw new Error("Something went wrong!");
     }
+  }
+
+  function reviewRender() {
+    if (authState?.isAuthenticated) {
+      return <LeaveAReview submitReview={submitReview} />;
+    }
+    return <p>Sign in to be able to leave a review.</p>;
+  }
+
+  async function submitReview(starInput: number, reviewDescription: string) {
+    let productId: number = 0;
+    if (product?.id) {
+      productId = product.id;
+    }
+
+    const reviewRequestModel = new ReviewRequestModel(
+      starInput,
+      productId,
+      reviewDescription
+    );
+    const url = `http://localhost:8080/api/reviews/secure`;
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reviewRequestModel),
+    };
+    const returnResponse = await fetch(url, requestOptions);
+    if (!returnResponse.ok) {
+      throw new Error("Something went wrong!");
+    }
+    setIsReviewLeft(true);
   }
 
   return (
@@ -183,6 +221,7 @@ export const ProductPage = () => {
           </div>
         </div>
         <hr />
+        {reviewRender()}
         <LatestReviews reviews={reviews} productId={product?.id} />
       </div>
     </div>
