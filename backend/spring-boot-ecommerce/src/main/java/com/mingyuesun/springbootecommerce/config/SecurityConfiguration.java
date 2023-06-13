@@ -21,7 +21,8 @@ public class SecurityConfiguration {
         // Protect endpoints at /api/<type>/add
         http.authorizeHttpRequests(configurer ->
                         configurer
-                                .requestMatchers("/api/cart/add/**")
+                                .requestMatchers("/api/cart/secure/**",
+                                        "/api/reviews/secure/**")
                                 .authenticated()
                                 .anyRequest().permitAll())
                 .oauth2ResourceServer(oauth2ResourceServer ->

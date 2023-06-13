@@ -112,7 +112,7 @@ export const ProductPage = () => {
   }
 
   async function addToCart() {
-    const url = `http://localhost:8080/api/cart/add?productId=${product?.id}&quantity=${quantity}`;
+    const url = `http://localhost:8080/api/cart/secure/add?productId=${product?.id}&quantity=${quantity}`;
     const requestOptions = {
       method: "PUT",
       headers: {

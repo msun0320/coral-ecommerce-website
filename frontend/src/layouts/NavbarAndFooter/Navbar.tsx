@@ -17,7 +17,7 @@ export const Navbar = () => {
   useEffect(() => {
     const fetchUserCurrentCartItemsCount = async () => {
       if (authState && authState.isAuthenticated) {
-        const url = `http://localhost:8080/api/cart/count`;
+        const url = `http://localhost:8080/api/cart/secure/count`;
         const requestOptions = {
           method: "GET",
           headers: {

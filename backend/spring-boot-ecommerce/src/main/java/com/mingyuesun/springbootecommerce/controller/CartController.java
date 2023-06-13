@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/cart")
 public class CartController {
 
     private CartService cartService;
@@ -18,13 +18,13 @@ public class CartController {
         this.cartService = cartService;
     }
 
-    @GetMapping("/cart/count")
+    @GetMapping("/secure/count")
     public int currentCartItemsCount() {
         String userEmail = "test@test.com";
         return cartService.currentCartItemsCount(userEmail);
     }
 
-    @PutMapping("/cart/add")
+    @PutMapping("/secure/add")
     public Product addProductToCart(@RequestHeader(value = "Authorization") String token,
             @RequestParam Long productId, Integer quantity) throws Exception {
         String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
