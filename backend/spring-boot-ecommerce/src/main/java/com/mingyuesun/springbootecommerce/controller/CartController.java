@@ -18,6 +18,12 @@ public class CartController {
         this.cartService = cartService;
     }
 
+    @GetMapping("/cart/count")
+    public int currentCartItemsCount() {
+        String userEmail = "test@test.com";
+        return cartService.currentCartItemsCount(userEmail);
+    }
+
     @PutMapping("/cart/add")
     public Product addProductToCart(@RequestHeader(value = "Authorization") String token,
             @RequestParam Long productId, Integer quantity) throws Exception {

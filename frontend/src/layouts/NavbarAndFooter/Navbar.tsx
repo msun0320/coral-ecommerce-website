@@ -3,12 +3,54 @@ import logo from "./../../logo.svg";
 import cart from "./../../assets/images/icon-cart.svg";
 import { useOktaAuth } from "@okta/okta-react";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
+import { useEffect, useState } from "react";
 
 export const Navbar = () => {
   const { oktaAuth, authState } = useOktaAuth();
+  const [httpError, setHttpError] = useState(null);
 
-  if (!authState) {
+  // Cart Items Count State
+  const [currentCartItemsCount, setCurrentCartItemsCount] = useState(0);
+  const [isLoadingCurrentCartItemsCount, setIsLoadingCurrentCartItemsCount] =
+    useState(true);
+
+  useEffect(() => {
+    const fetchUserCurrentCartItemsCount = async () => {
+      if (authState && authState.isAuthenticated) {
+        const url = `http://localhost:8080/api/cart/count`;
+        const requestOptions = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const currentCartItemsCountResponse = await fetch(url, requestOptions);
+        if (!currentCartItemsCountResponse.ok) {
+          throw new Error("Something went wrong!");
+        }
+        const currentCartItemsCountResponseJson =
+          await currentCartItemsCountResponse.json();
+        setCurrentCartItemsCount(currentCartItemsCountResponseJson);
+      }
+      setIsLoadingCurrentCartItemsCount(false);
+    };
+    fetchUserCurrentCartItemsCount().catch((error: any) => {
+      setIsLoadingCurrentCartItemsCount(false);
+      setHttpError(error.message);
+    });
+  }, [authState]);
+
+  if (!authState || isLoadingCurrentCartItemsCount) {
     return <SpinnerLoading />;
+  }
+
+  if (httpError) {
+    return (
+      <div className="container m-5">
+        <p>{httpError}</p>
+      </div>
+    );
   }
 
   const handleLogout = async () => oktaAuth.signOut();
@@ -65,7 +107,7 @@ export const Navbar = () => {
           )}
           <li>
             <a className="nav-link" href="#">
-              <img src={cart} alt="Shopping cart" />
+              <img src={cart} alt="Shopping cart" /> ({currentCartItemsCount})
             </a>
           </li>
         </ul>

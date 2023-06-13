@@ -4,9 +4,13 @@ import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import { StarsReview } from "../Utils/StarsReview";
 import ReviewModel from "../../models/ReviewModel";
 import { LatestReviews } from "./LatestReviews";
+import { useOktaAuth } from "@okta/okta-react";
 
 export const ProductPage = () => {
+  const { authState } = useOktaAuth();
+
   const [product, setProduct] = useState<ProductModel>();
+  const [quantity, setQuantity] = useState("1");
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
 
@@ -46,7 +50,7 @@ export const ProductPage = () => {
       setIsLoading(false);
       setHttpError(error.message);
     });
-  }, []);
+  }, [quantity]);
 
   useEffect(() => {
     const fetchProductReviews = async () => {
@@ -107,6 +111,21 @@ export const ProductPage = () => {
     );
   }
 
+  async function addToCart() {
+    const url = `http://localhost:8080/api/cart/add?productId=${product?.id}&quantity=${quantity}`;
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        "Content-Type": "application/json",
+      },
+    };
+    const addToCartResponse = await fetch(url, requestOptions);
+    if (!addToCartResponse.ok) {
+      throw new Error("Something went wrong!");
+    }
+  }
+
   return (
     <div className="py-3">
       <div className="container-fluid">
@@ -141,16 +160,17 @@ export const ProductPage = () => {
             <form className="row g-3">
               <div className="col-auto">
                 <input
+                  onChange={(e) => setQuantity(e.target.value)}
                   type="number"
                   className="form-control rounded-0"
                   id="quantity"
-                  value="1"
+                  value={quantity}
                   min="1"
                   max={product?.quantity}
                 />
               </div>
               <div className="col-auto">
-                <button type="submit" className="btn">
+                <button onClick={addToCart} type="submit" className="btn">
                   Add to Cart
                 </button>
               </div>

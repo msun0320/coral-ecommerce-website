@@ -46,4 +46,8 @@ public class CartService {
         return product.get();
     }
 
+    public int currentCartItemsCount(String userEmail) {
+        return cartItemRepository.findCartItemsByUserEmail(userEmail).size();
+    }
+
 }
