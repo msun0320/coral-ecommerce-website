@@ -7,9 +7,10 @@ import { ProductsPage } from "./layouts/ProductsPage/ProductsPage";
 import { ProductPage } from "./layouts/ProductPage/ProductPage";
 import { oktaConfig } from "./lib/oktaConfig";
 import { OktaAuth, toRelativeUrl } from "@okta/okta-auth-js";
-import { LoginCallback, Security } from "@okta/okta-react";
+import { LoginCallback, SecureRoute, Security } from "@okta/okta-react";
 import LoginWidget from "./Auth/LoginWidget";
 import { ReviewListPage } from "./layouts/ProductPage/ReviewListPage/ReviewListPage";
+import { CarPage } from "./layouts/CartPage/CartPage";
 
 const oktaAuth = new OktaAuth(oktaConfig);
 
@@ -54,6 +55,9 @@ export const App = () => {
               render={() => <LoginWidget config={oktaConfig} />}
             />
             <Route path="/login/callback" component={LoginCallback} />
+            <SecureRoute path="/cart">
+              <CarPage />
+            </SecureRoute>
           </Switch>
         </div>
         <Footer />

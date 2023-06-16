@@ -4,15 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "cart_item")
+@Table(name = "cart")
 @Data
-public class CartItem {
+public class Cart {
 
-    public CartItem() {}
+    public Cart() {}
 
-    public CartItem(String userEmail, Long productId, int quantity, String createdAt, String updatedAt) {
+    public Cart(String userEmail, Product product, int quantity, String createdAt, String updatedAt) {
         this.userEmail = userEmail;
-        this.productId = productId;
+        this.product = product;
         this.quantity = quantity;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -26,8 +26,9 @@ public class CartItem {
     @Column(name = "user_email")
     private String userEmail;
 
-    @Column(name = "product_id")
-    private Long productId;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Column(name = "quantity")
     private int quantity;

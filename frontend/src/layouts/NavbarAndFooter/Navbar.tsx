@@ -94,9 +94,9 @@ export const Navbar = () => {
         <ul className="navbar-nav ms-auto d-flex flex-row">
           {!authState.isAuthenticated ? (
             <li className="nav-item">
-              <Link className="nav-link me-3 me-lg-0" to="/login">
+              <NavLink className="nav-link me-3 me-lg-0" to="/login">
                 Sign In
-              </Link>
+              </NavLink>
             </li>
           ) : (
             <li className="nav-item">
@@ -105,10 +105,10 @@ export const Navbar = () => {
               </button>
             </li>
           )}
-          <li>
-            <a className="nav-link" href="#">
+          <li className="nav-item">
+            <NavLink className="nav-link" to="/cart">
               <img src={cart} alt="Shopping cart" /> ({currentCartItemsCount})
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>
