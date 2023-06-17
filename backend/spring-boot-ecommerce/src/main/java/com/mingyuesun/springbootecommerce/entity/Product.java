@@ -22,8 +22,9 @@ public class Product {
     @Column(name = "price")
     private Double price;
 
-    @Column(name = "quantity")
-    private int quantity;
+    @OneToOne
+    @JoinColumn(name = "inventory_id")
+    private Long inventoryId;
 
     @Column(name = "category")
     private String category;

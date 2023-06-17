@@ -16,18 +16,20 @@ public class Review {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_email")
-    private String userEmail;
+    @ManyToOne
+    @Column(name = "user_id")
+    private User user;
 
     @Column(name = "created_at")
     @CreationTimestamp
     private Date createdAt;
 
     @Column(name = "rating")
-    private double rating;
+    private Double rating;
 
+    @ManyToOne
     @Column(name = "product_id")
-    private Long productId;
+    private Product product;
 
     @Column(name = "review_description")
     private String reviewDescription;
