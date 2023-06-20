@@ -47,7 +47,6 @@ CREATE TABLE `product` (
   `name` varchar(45) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `price` FLOAT DEFAULT NULL,
-  `inventory_id` BIGINT(20) DEFAULT NULL,
   `category` varchar(11) DEFAULT NULL,
   `img` varchar(225) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -66,6 +65,7 @@ DROP TABLE IF EXISTS `inventory`;
 
 CREATE TABLE `inventory` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `product_id` BIGINT(20) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = latin1;
@@ -84,7 +84,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `username` varchar(30) DEFAULT NULL,
-  `password` varchar(40) DEFAULT NULL,
+  `password` varchar(60) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
@@ -115,7 +115,7 @@ CREATE TABLE `address` (
 /*!40101 SET character_set_client = @saved_cs_client */
 ;
 
-DROP TABLE IF EXISTS `order`;
+DROP TABLE IF EXISTS `orders`;
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */
 ;
@@ -123,7 +123,7 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET character_set_client = utf8 */
 ;
 
-CREATE TABLE `order` (
+CREATE TABLE `orders` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -132,7 +132,7 @@ CREATE TABLE `order` (
 /*!40101 SET character_set_client = @saved_cs_client */
 ;
 
-DROP TABLE IF EXISTS `order_items`;
+DROP TABLE IF EXISTS `order_item`;
 
 /*!40101 SET @saved_cs_client     = @@character_set_client */
 ;
@@ -140,7 +140,7 @@ DROP TABLE IF EXISTS `order_items`;
 /*!40101 SET character_set_client = utf8 */
 ;
 
-CREATE TABLE `order_items` (
+CREATE TABLE `order_item` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `order_id` BIGINT(20) DEFAULT NULL,
   `product_id` BIGINT(20) DEFAULT NULL,

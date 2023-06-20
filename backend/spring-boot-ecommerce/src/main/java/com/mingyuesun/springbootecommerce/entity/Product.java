@@ -13,18 +13,14 @@ public class Product {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "price")
     private Double price;
-
-    @OneToOne
-    @JoinColumn(name = "inventory_id")
-    private Long inventoryId;
 
     @Column(name = "category")
     private String category;

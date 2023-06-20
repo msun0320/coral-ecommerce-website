@@ -1,6 +1,8 @@
 package com.mingyuesun.springbootecommerce.dao;
 
+import com.mingyuesun.springbootecommerce.entity.Product;
 import com.mingyuesun.springbootecommerce.entity.Review;
+import com.mingyuesun.springbootecommerce.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +12,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     Page<Review> findByProductId(@RequestParam("product_id") Long productId, Pageable pageable);
 
-    Review findByUserEmailAndProductId(String userEmail, Long productId);
+    Review findByUserAndProduct(User user, Product product);
 
 }

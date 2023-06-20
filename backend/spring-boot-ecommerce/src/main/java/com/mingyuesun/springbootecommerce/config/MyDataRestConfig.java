@@ -1,5 +1,6 @@
 package com.mingyuesun.springbootecommerce.config;
 
+import com.mingyuesun.springbootecommerce.entity.Order;
 import com.mingyuesun.springbootecommerce.entity.Product;
 import com.mingyuesun.springbootecommerce.entity.Review;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +26,7 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         
         config.exposeIdsFor(Product.class);
         config.exposeIdsFor(Review.class);
-        
+
         disableHttpMethods(Product.class, config, theUnsupportedActions);
         disableHttpMethods(Review.class, config, theUnsupportedActions);
 

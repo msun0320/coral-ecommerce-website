@@ -17,7 +17,7 @@ public class Review {
     private Long id;
 
     @ManyToOne
-    @Column(name = "user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "created_at")
@@ -28,7 +28,7 @@ public class Review {
     private Double rating;
 
     @ManyToOne
-    @Column(name = "product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Column(name = "review_description")

@@ -1,9 +1,8 @@
 package com.mingyuesun.springbootecommerce.controller;
 
-import com.mingyuesun.springbootecommerce.entity.Cart;
 import com.mingyuesun.springbootecommerce.entity.Product;
+import com.mingyuesun.springbootecommerce.requestmodels.ProductRequest;
 import com.mingyuesun.springbootecommerce.service.ProductService;
-import com.mingyuesun.springbootecommerce.utils.ExtractJWT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +10,7 @@ import java.util.List;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
-@RequestMapping("/api/cart")
+@RequestMapping("/api/products")
 public class ProductController {
 
     private ProductService productService;
@@ -21,29 +20,24 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/secure")
-    public List<Cart> getCart(@RequestHeader(value = "Authorization") String token) throws Exception {
-        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
-        return productService.getCart(userEmail);
+    @GetMapping
+    public List<Product> getProducts() {
+        return productService.getProducts();
     }
 
-    @GetMapping("/secure/count")
-    public int cartCount() {
-        String userEmail = "test@test.com";
-        return productService.cartCount(userEmail);
+    @GetMapping("/{productId}")
+    public Product getProduct(@PathVariable Long productId) throws Exception {
+        return productService.getProduct(productId);
     }
 
-    @PutMapping("/secure/add")
-    public Product addToCart(@RequestHeader(value = "Authorization") String token,
-            @RequestParam Long productId, Integer quantity) throws Exception {
-        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
-        return productService.addToCart(userEmail, productId, quantity);
+    @PostMapping
+    public Product addProduct(@RequestBody ProductRequest productRequest) throws Exception {
+        return productService.addProduct(productRequest);
     }
 
-    @PutMapping("/secure/delete")
-    public void deleteFromCart(@RequestHeader(value = "Authorization") String token,
-                               @RequestParam Long productId) throws Exception {
-        String userEmail = ExtractJWT.payloadJWTExtraction(token, "\"sub\"");
-        productService.deleteFromCart(userEmail, productId);
+    @DeleteMapping("/{productId}")
+    public void deleteProduct(@PathVariable("productId") long productId) throws Exception {
+        productService.deleteProduct(productId);
     }
+
 }

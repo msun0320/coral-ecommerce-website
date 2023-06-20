@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Data
 public class Order {
 
@@ -17,10 +17,10 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "inventory_id")
-    private Long inventoryId;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<OrderItems> items = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
 
 }
