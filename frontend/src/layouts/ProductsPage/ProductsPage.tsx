@@ -26,11 +26,7 @@ export const ProductsPage = () => {
       if (searchUrl === "") {
         url = `${baseUrl}?page=${currentPage - 1}&size=${productsPerPage}`;
       } else {
-        let searchWithPage = searchUrl.replace(
-          "<pageNumber>",
-          `${currentPage - 1}`
-        );
-        url = baseUrl + searchWithPage;
+        url = baseUrl + searchUrl;
       }
 
       const response = await fetch(url);
@@ -51,12 +47,12 @@ export const ProductsPage = () => {
       for (const key in responseData) {
         loadedProducts.push({
           id: responseData[key].id,
-          title: responseData[key].title,
+          name: responseData[key].name,
           price: responseData[key].price,
           description: responseData[key].description,
-          quantity: responseData[key].quantity,
           category: responseData[key].category,
           img: responseData[key].img,
+          inventory: responseData[key].inventory,
         });
       }
 

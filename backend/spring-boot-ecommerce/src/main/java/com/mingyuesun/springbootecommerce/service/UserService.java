@@ -39,11 +39,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public String loginUser(LoginRequest loginBody) {
-        Optional<User> User = userRepository.findByUsername(loginBody.getUsername());
+    public String loginUser(LoginRequest loginRequest) {
+        Optional<User> User = userRepository.findByUsername(loginRequest.getUsername());
         if (User.isPresent()) {
             User user = User.get();
-            if (encryptionService.verifyPassword(loginBody.getPassword(), user.getPassword())) {
+            if (encryptionService.verifyPassword(loginRequest.getPassword(), user.getPassword())) {
                 return jwtService.generateJWT(user);
             }
         }

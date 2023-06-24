@@ -1,29 +1,23 @@
 import ProductModel from "./ProductModel";
 import UserModel from "./UserModel";
 
-class ReviewModel {
+class CartItemModel {
   id: number;
   user: UserModel;
-  createdAt: string;
-  rating: number;
   product: ProductModel;
-  reviewDescription?: string;
+  quantity: number;
 
   constructor(
     id: number,
     user: UserModel,
-    createdAt: string,
-    rating: number,
     product: ProductModel,
-    reviewDescription: string
+    quantity: number
   ) {
     this.id = id;
     this.user = user;
-    this.createdAt = createdAt;
-    this.rating = rating;
     this.product = product;
-    this.reviewDescription = reviewDescription;
+    this.quantity = quantity;
   }
 }
 
-export default ReviewModel;
+export default CartItemModel;

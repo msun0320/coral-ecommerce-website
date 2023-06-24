@@ -4,15 +4,13 @@ import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import { StarsReview } from "../Utils/StarsReview";
 import ReviewModel from "../../models/ReviewModel";
 import { LatestReviews } from "./LatestReviews";
-import { useOktaAuth } from "@okta/okta-react";
 import { LeaveAReview } from "../Utils/LeaveAReview";
 import ReviewRequestModel from "../../models/ReviewRequestModel";
+import CartItemRequestModel from "../../models/CartItemRequestModel";
 
 export const ProductPage = () => {
-  const { authState } = useOktaAuth();
-
   const [product, setProduct] = useState<ProductModel>();
-  const [quantity, setQuantity] = useState("1");
+  const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
 
@@ -39,12 +37,12 @@ export const ProductPage = () => {
 
       const loadedProduct: ProductModel = {
         id: responseJson.id,
-        title: responseJson.title,
+        name: responseJson.name,
         price: responseJson.price,
         description: responseJson.description,
-        quantity: responseJson.quantity,
         category: responseJson.category,
         img: responseJson.img,
+        inventory: responseJson.inventory,
       };
 
       setProduct(loadedProduct);
@@ -54,11 +52,11 @@ export const ProductPage = () => {
       setIsLoading(false);
       setHttpError(error.message);
     });
-  }, [quantity]);
+  }, []);
 
   useEffect(() => {
     const fetchProductReviews = async () => {
-      const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByProductId?productId=${productId}`;
+      const reviewUrl: string = `http://localhost:8080/api/reviews/findByProductId?productId=${productId}`;
 
       const responseReviews = await fetch(reviewUrl);
 
@@ -77,10 +75,10 @@ export const ProductPage = () => {
       for (const key in responseData) {
         loadedReviews.push({
           id: responseData[key].id,
-          userEmail: responseData[key].userEmail,
+          user: responseData[key].user,
           createdAt: responseData[key].createdAt,
           rating: responseData[key].rating,
-          productId: responseData[key].productId,
+          product: responseData[key].product,
           reviewDescription: responseData[key].reviewDescription,
         });
         weightedStarReviews = weightedStarReviews + responseData[key].rating;
@@ -116,13 +114,18 @@ export const ProductPage = () => {
   }
 
   async function addToCart() {
-    const url = `http://localhost:8080/api/cart/secure/add?productId=${product?.id}&quantity=${quantity}`;
+    const cartItemRequestModel = new CartItemRequestModel(
+      Number(productId),
+      quantity
+    );
+    const url = `http://localhost:8080/api/cartItems/productId${product?.id}&quantity=${quantity}`;
     const requestOptions = {
       method: "PUT",
       headers: {
-        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(cartItemRequestModel),
     };
     const addToCartResponse = await fetch(url, requestOptions);
     if (!addToCartResponse.ok) {
@@ -131,7 +134,7 @@ export const ProductPage = () => {
   }
 
   function reviewRender() {
-    if (authState?.isAuthenticated) {
+    if (localStorage.getItem("token")) {
       return <LeaveAReview submitReview={submitReview} />;
     }
     return <p>Sign in to be able to leave a review.</p>;
@@ -148,11 +151,11 @@ export const ProductPage = () => {
       productId,
       reviewDescription
     );
-    const url = `http://localhost:8080/api/reviews/secure`;
+    const url = `http://localhost:8080/api/reviews`;
     const requestOptions = {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(reviewRequestModel),
@@ -184,11 +187,12 @@ export const ProductPage = () => {
           </div>
           <div className="my-4 col-md-6 ps-md-3">
             <h5 className="text-secondary">{product?.category}</h5>
-            <h2>{product?.title}</h2>
+            <h2>{product?.name}</h2>
             <StarsReview rating={totalStars} size={32} />
             <p>
               <strong>${product?.price}</strong> + Free Shipping{" "}
-              {product?.quantity && product?.quantity > 0 ? (
+              {product?.inventory?.quantity &&
+              product?.inventory?.quantity > 0 ? (
                 <span className="text-success ms-3">In Stock</span>
               ) : (
                 <span className="text-danger">Out of Stock</span>
@@ -198,13 +202,13 @@ export const ProductPage = () => {
             <form className="row g-3">
               <div className="col-auto">
                 <input
-                  onChange={(e) => setQuantity(e.target.value)}
+                  onChange={(e) => setQuantity(Number(e.target.value))}
                   type="number"
                   className="form-control rounded-0"
                   id="quantity"
                   value={quantity}
                   min="1"
-                  max={product?.quantity}
+                  max={product?.inventory?.quantity}
                 />
               </div>
               <div className="col-auto">

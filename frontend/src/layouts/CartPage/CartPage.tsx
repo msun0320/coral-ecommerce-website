@@ -1,55 +1,53 @@
-import { useOktaAuth } from "@okta/okta-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
-import CartModel from "../../models/CartModel";
+import CartItemModel from "../../models/CartItemModel";
 
-export const CarPage = () => {
-  const { authState } = useOktaAuth();
+export const CartPage = () => {
   const [httpError, setHttpError] = useState(null);
 
-  const [cart, setCart] = useState<CartModel[]>([]);
-  const [isLoadingUserCart, setIsLoadingUserCart] = useState(true);
+  const [cartItems, setCartItems] = useState<CartItemModel[]>([]);
+  const [isLoadingCartItems, setIsLoadingCartItems] = useState(true);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const fetchUserCart = async () => {
-      if (authState && authState.isAuthenticated) {
-        const url = `http://localhost:8080/api/cart/secure`;
+    const fetchCartItems = async () => {
+      if (localStorage.getItem("token")) {
+        const url = `http://localhost:8080/api/cartItems`;
         const requestOptions = {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
         };
-        const cartResponse = await fetch(url, requestOptions);
-        if (!cartResponse.ok) {
+        const cartItemsResponse = await fetch(url, requestOptions);
+        if (!cartItemsResponse.ok) {
           throw new Error("Something went wrong!");
         }
-        const cartResponseJson = await cartResponse.json();
+        const cartItemsResponseJson = await cartItemsResponse.json();
 
         let subtotal = 0;
 
-        for (const key in cartResponseJson) {
+        for (const key in cartItemsResponseJson) {
           subtotal +=
-            cartResponseJson[key].product.price *
-            cartResponseJson[key].product.quantity;
+            cartItemsResponseJson[key].product.price *
+            cartItemsResponseJson[key].quantity;
         }
 
         setTotal(subtotal);
-        setCart(cartResponseJson);
+        setCartItems(cartItemsResponseJson);
       }
-      setIsLoadingUserCart(false);
+      setIsLoadingCartItems(false);
     };
-    fetchUserCart().catch((error: any) => {
-      setIsLoadingUserCart(false);
+    fetchCartItems().catch((error: any) => {
+      setIsLoadingCartItems(false);
       setHttpError(error.message);
     });
     window.scrollTo(0, 0);
-  }, [authState]);
+  }, []);
 
-  if (isLoadingUserCart) {
+  if (isLoadingCartItems) {
     return <SpinnerLoading />;
   }
 
@@ -61,12 +59,12 @@ export const CarPage = () => {
     );
   }
 
-  async function deleteFromCart(productId: number) {
-    const url = `http://localhost:8080/api/cart/secure/delete?productId=${productId}`;
+  async function deleteCartItem(cartItemId: number) {
+    const url = `http://localhost:8080/api/cartItems/${cartItemId}`;
     const requestOptions = {
-      method: "PUT",
+      method: "DELETE",
       headers: {
-        Authorization: `Bearer ${authState?.accessToken?.accessToken}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
     };
@@ -81,24 +79,21 @@ export const CarPage = () => {
       <div className="container-fluid">
         <h3>Cart</h3>
         <div>
-          {cart.map((cartItem) => (
+          {cartItems.map((cartItem) => (
             <div key={cartItem.id}>
               {cartItem.product?.img ? (
-                <img
-                  src={cartItem.product?.img}
-                  alt={cartItem.product?.title}
-                />
+                <img src={cartItem.product?.img} alt={cartItem.product?.name} />
               ) : (
                 <img
                   src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
                   alt="Adicolor Classics Joggers"
                 />
               )}
-              <h5>{cartItem.product?.title}</h5>
+              <h5>{cartItem.product?.name}</h5>
               <p>${cartItem.product?.price}</p>
-              <p>{cartItem.product?.quantity}</p>
+              <p>{cartItem.quantity}</p>
               <button
-                onClick={() => deleteFromCart(cartItem.id)}
+                onClick={() => deleteCartItem(cartItem.id)}
                 type="submit"
                 className="btn"
               >

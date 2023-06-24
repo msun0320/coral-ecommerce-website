@@ -1,5 +1,4 @@
 import logo from "./../../logo.svg";
-import cart from "./../../assets/images/icon-cart.svg";
 import facebook from "./../../assets/images/icon-facebook.svg";
 import twitter from "./../../assets/images/icon-twitter.svg";
 import linkedin from "./../../assets/images/icon-linkedin.svg";

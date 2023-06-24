@@ -1,47 +1,44 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "./../../logo.svg";
 import cart from "./../../assets/images/icon-cart.svg";
-import { useOktaAuth } from "@okta/okta-react";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import { useEffect, useState } from "react";
+import AuthService from "../../services/auth";
 
 export const Navbar = () => {
-  const { oktaAuth, authState } = useOktaAuth();
   const [httpError, setHttpError] = useState(null);
 
   // Cart Items Count State
-  const [currentCartItemsCount, setCurrentCartItemsCount] = useState(0);
-  const [isLoadingCurrentCartItemsCount, setIsLoadingCurrentCartItemsCount] =
-    useState(true);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+  const [isLoadingCartItemsCount, setIsLoadingCartItemsCount] = useState(true);
 
   useEffect(() => {
-    const fetchUserCurrentCartItemsCount = async () => {
-      if (authState && authState.isAuthenticated) {
-        const url = `http://localhost:8080/api/cart/secure/count`;
+    const fetchCartItemsCount = async () => {
+      if (localStorage.getItem("token")) {
+        const url = `http://localhost:8080/api/cartItems/count`;
         const requestOptions = {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${authState.accessToken?.accessToken}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
             "Content-Type": "application/json",
           },
         };
-        const currentCartItemsCountResponse = await fetch(url, requestOptions);
-        if (!currentCartItemsCountResponse.ok) {
+        const cartItemsCountResponse = await fetch(url, requestOptions);
+        if (!cartItemsCountResponse.ok) {
           throw new Error("Something went wrong!");
         }
-        const currentCartItemsCountResponseJson =
-          await currentCartItemsCountResponse.json();
-        setCurrentCartItemsCount(currentCartItemsCountResponseJson);
+        const cartItemsCountResponseJson = await cartItemsCountResponse.json();
+        setCartItemsCount(cartItemsCountResponseJson);
       }
-      setIsLoadingCurrentCartItemsCount(false);
+      setIsLoadingCartItemsCount(false);
     };
-    fetchUserCurrentCartItemsCount().catch((error: any) => {
-      setIsLoadingCurrentCartItemsCount(false);
+    fetchCartItemsCount().catch((error: any) => {
+      setIsLoadingCartItemsCount(false);
       setHttpError(error.message);
     });
-  }, [authState]);
+  }, []);
 
-  if (!authState || isLoadingCurrentCartItemsCount) {
+  if (!isLoadingCartItemsCount) {
     return <SpinnerLoading />;
   }
 
@@ -53,9 +50,7 @@ export const Navbar = () => {
     );
   }
 
-  const handleLogout = async () => oktaAuth.signOut();
-
-  console.log(authState);
+  const handleLogout = async () => AuthService.logout();
 
   return (
     <nav className="navbar navbar-expand-lg">
@@ -92,7 +87,7 @@ export const Navbar = () => {
           </ul>
         </div>
         <ul className="navbar-nav ms-auto d-flex flex-row">
-          {!authState.isAuthenticated ? (
+          {!localStorage.getItem("token") ? (
             <li className="nav-item">
               <NavLink className="nav-link me-3 me-lg-0" to="/login">
                 Sign In
@@ -107,7 +102,7 @@ export const Navbar = () => {
           )}
           <li className="nav-item">
             <NavLink className="nav-link" to="/cart">
-              <img src={cart} alt="Shopping cart" /> ({currentCartItemsCount})
+              <img src={cart} alt="Shopping cart" /> ({cartItemsCount})
             </NavLink>
           </li>
         </ul>

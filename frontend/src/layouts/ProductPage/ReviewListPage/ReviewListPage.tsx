@@ -42,10 +42,10 @@ export const ReviewListPage = () => {
       for (const key in responseData) {
         loadedReviews.push({
           id: responseData[key].id,
-          userEmail: responseData[key].userEmail,
+          user: responseData[key].user,
           createdAt: responseData[key].createdAt,
           rating: responseData[key].rating,
-          productId: responseData[key].productId,
+          product: responseData[key].product,
           reviewDescription: responseData[key].reviewDescription,
         });
       }

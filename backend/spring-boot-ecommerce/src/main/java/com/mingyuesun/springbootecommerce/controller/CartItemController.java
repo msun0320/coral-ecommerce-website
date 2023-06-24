@@ -12,11 +12,11 @@ import java.util.List;
 @CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("/api/cartItems")
-public class CartItemsController {
+public class CartItemController {
 
     private CartItemService cartItemService;
 
-    public CartItemsController(CartItemService cartItemService) {
+    public CartItemController(CartItemService cartItemService) {
         this.cartItemService = cartItemService;
     }
 

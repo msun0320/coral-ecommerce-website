@@ -29,12 +29,12 @@ export const Carousel = () => {
       for (const key in responseData) {
         loadedProducts.push({
           id: responseData[key].id,
-          title: responseData[key].title,
+          name: responseData[key].name,
           price: responseData[key].price,
           description: responseData[key].description,
-          quantity: responseData[key].quantity,
           category: responseData[key].category,
           img: responseData[key].img,
+          inventory: responseData[key].inventory,
         });
       }
 

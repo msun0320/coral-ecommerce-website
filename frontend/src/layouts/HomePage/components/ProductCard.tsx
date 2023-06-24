@@ -22,7 +22,7 @@ export const ProductCard: React.FC<{ product: ProductModel }> = (props) => {
         />
       )}
       <div className="card-body rounded-0">
-        <h5 className="card-title fs-6">{props.product.title}</h5>
+        <h5 className="card-title fs-6">{props.product.name}</h5>
         <p className="card-text d-flex justify-content-between">
           <small className="text-body-secondary">
             {props.product.category}

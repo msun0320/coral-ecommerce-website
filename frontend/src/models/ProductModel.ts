@@ -1,28 +1,30 @@
+import InventoryModel from "./InventoryModel";
+
 class ProductModel {
   id: number;
-  title: string;
+  name: string;
   description?: string;
   price?: number;
-  quantity?: number;
   category?: string;
   img?: string;
+  inventory: InventoryModel;
 
   constructor(
     id: number,
-    title: string,
+    name: string,
     description: string,
     price: number,
-    quantity: number,
     category: string,
-    img: string
+    img: string,
+    inventory: InventoryModel
   ) {
     this.id = id;
-    this.title = title;
+    this.name = name;
     this.description = description;
     this.price = price;
-    this.quantity = quantity;
     this.category = category;
     this.img = img;
+    this.inventory = inventory;
   }
 }
 
