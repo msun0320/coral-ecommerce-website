@@ -1,5 +1,3 @@
-import InventoryModel from "./InventoryModel";
-
 class ProductModel {
   id: number;
   name: string;
@@ -7,7 +5,6 @@ class ProductModel {
   price?: number;
   category?: string;
   img?: string;
-  inventory: InventoryModel;
 
   constructor(
     id: number,
@@ -15,8 +12,7 @@ class ProductModel {
     description: string,
     price: number,
     category: string,
-    img: string,
-    inventory: InventoryModel
+    img: string
   ) {
     this.id = id;
     this.name = name;
@@ -24,7 +20,6 @@ class ProductModel {
     this.price = price;
     this.category = category;
     this.img = img;
-    this.inventory = inventory;
   }
 }
 

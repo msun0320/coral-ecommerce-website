@@ -37,10 +37,10 @@ export const ProductsPage = () => {
 
       const responseJson = await response.json();
 
-      const responseData = responseJson._embedded.products;
+      const responseData = responseJson.content;
 
-      setTotalAmountOfProducts(responseJson.page.totalElements);
-      setTotalPages(responseJson.page.totalPages);
+      setTotalAmountOfProducts(responseJson.totalElements);
+      setTotalPages(responseJson.totalPages);
 
       const loadedProducts: ProductModel[] = [];
 
@@ -52,7 +52,6 @@ export const ProductsPage = () => {
           description: responseData[key].description,
           category: responseData[key].category,
           img: responseData[key].img,
-          inventory: responseData[key].inventory,
         });
       }
 
@@ -84,7 +83,7 @@ export const ProductsPage = () => {
       setSearchUrl("");
     } else {
       setSearchUrl(
-        `/search/findByTitleContaining?title=${search}&page=<pageNumber>&size=${productsPerPage}`
+        `/search?name=${search}&page=${currentPage - 1}&size=${productsPerPage}`
       );
     }
     setCategorySelection("Product category");
@@ -99,11 +98,11 @@ export const ProductsPage = () => {
     ) {
       setCategorySelection(value);
       setSearchUrl(
-        `/search/findByCategory?category=${value}&page=<pageNumber>&size=${productsPerPage}`
+        `/category/${value}?page=${currentPage - 1}&size=${productsPerPage}`
       );
     } else {
       setCategorySelection("All");
-      setSearchUrl(`?page=<pageNumber>&size=${productsPerPage}`);
+      setSearchUrl(`?page=${currentPage - 1}&size=${productsPerPage}`);
     }
   };
 

@@ -6,10 +6,11 @@ import com.mingyuesun.springbootecommerce.dao.ProductRepository;
 import com.mingyuesun.springbootecommerce.entity.Inventory;
 import com.mingyuesun.springbootecommerce.entity.Product;
 import com.mingyuesun.springbootecommerce.requestmodels.ProductRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,8 +29,16 @@ public class ProductService {
         this.cartItemRepository = cartItemRepository;
     }
 
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public Page<Product> getProducts(Pageable pageable) {
+        return productRepository.findAll(pageable);
+    }
+
+    public Page<Product> getProductsByCategory(String category, Pageable pageable) {
+        return productRepository.findByCategory(category, pageable);
+    }
+
+    public Page<Product> getProductsByNameContaining(String name, Pageable pageable) {
+        return productRepository.findByNameContaining(name, pageable);
     }
 
     public Product getProduct(Long productId) throws Exception {

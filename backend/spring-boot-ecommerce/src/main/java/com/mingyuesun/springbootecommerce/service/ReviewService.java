@@ -2,16 +2,16 @@ package com.mingyuesun.springbootecommerce.service;
 
 import com.mingyuesun.springbootecommerce.dao.ProductRepository;
 import com.mingyuesun.springbootecommerce.dao.ReviewRepository;
-import com.mingyuesun.springbootecommerce.entity.Product;
 import com.mingyuesun.springbootecommerce.entity.Review;
 import com.mingyuesun.springbootecommerce.entity.User;
 import com.mingyuesun.springbootecommerce.requestmodels.ReviewRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 
 @Service
 @Transactional
@@ -26,8 +26,8 @@ public class ReviewService {
         this.productRepository = productRepository;
     }
 
-    public List<Review> getReviews() {
-        return reviewRepository.findAll();
+    public Page<Review> getReviews(Pageable pageable) {
+        return reviewRepository.findAll(pageable);
     }
 
     public void postReview(User user, ReviewRequest reviewRequest) throws Exception {

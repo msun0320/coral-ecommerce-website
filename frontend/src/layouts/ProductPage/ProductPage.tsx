@@ -9,7 +9,9 @@ import ReviewRequestModel from "../../models/ReviewRequestModel";
 import CartItemRequestModel from "../../models/CartItemRequestModel";
 
 export const ProductPage = () => {
+  const [jwt, setJwt] = useState(localStorage.getItem("jwt"));
   const [product, setProduct] = useState<ProductModel>();
+  const [inventory, setInventory] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [httpError, setHttpError] = useState(null);
@@ -42,7 +44,6 @@ export const ProductPage = () => {
         description: responseJson.description,
         category: responseJson.category,
         img: responseJson.img,
-        inventory: responseJson.inventory,
       };
 
       setProduct(loadedProduct);
@@ -56,7 +57,7 @@ export const ProductPage = () => {
 
   useEffect(() => {
     const fetchProductReviews = async () => {
-      const reviewUrl: string = `http://localhost:8080/api/reviews/findByProductId?productId=${productId}`;
+      const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByProductId?productId=${productId}`;
 
       const responseReviews = await fetch(reviewUrl);
 
@@ -118,11 +119,11 @@ export const ProductPage = () => {
       Number(productId),
       quantity
     );
-    const url = `http://localhost:8080/api/cartItems/productId${product?.id}&quantity=${quantity}`;
+    const url = "http://localhost:8080/api/cartItems";
     const requestOptions = {
-      method: "PUT",
+      method: "POST",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(cartItemRequestModel),
@@ -134,10 +135,10 @@ export const ProductPage = () => {
   }
 
   function reviewRender() {
-    if (localStorage.getItem("token")) {
+    if (jwt) {
       return <LeaveAReview submitReview={submitReview} />;
     }
-    return <p>Sign in to be able to leave a review.</p>;
+    return <p>Log in to be able to leave a review.</p>;
   }
 
   async function submitReview(starInput: number, reviewDescription: string) {
@@ -151,11 +152,11 @@ export const ProductPage = () => {
       productId,
       reviewDescription
     );
-    const url = `http://localhost:8080/api/reviews`;
+    const url = "http://localhost:8080/api/reviews";
     const requestOptions = {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(reviewRequestModel),
@@ -173,11 +174,7 @@ export const ProductPage = () => {
         <div className="row">
           <div className="col-md-6">
             {product?.img ? (
-              <img
-                className="w-100"
-                src={product?.img}
-                alt={product?.description}
-              />
+              <img className="w-100" src={product?.img} alt={product?.name} />
             ) : (
               <img
                 src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
@@ -191,8 +188,7 @@ export const ProductPage = () => {
             <StarsReview rating={totalStars} size={32} />
             <p>
               <strong>${product?.price}</strong> + Free Shipping{" "}
-              {product?.inventory?.quantity &&
-              product?.inventory?.quantity > 0 ? (
+              {inventory > 0 ? (
                 <span className="text-success ms-3">In Stock</span>
               ) : (
                 <span className="text-danger">Out of Stock</span>
@@ -208,7 +204,7 @@ export const ProductPage = () => {
                   id="quantity"
                   value={quantity}
                   min="1"
-                  max={product?.inventory?.quantity}
+                  max={inventory}
                 />
               </div>
               <div className="col-auto">

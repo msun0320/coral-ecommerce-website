@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import CartItemModel from "../../models/CartItemModel";
+import EventBus from "../../common/EventBus";
 
 export const CartPage = () => {
+  const [jwt, setJwt] = useState(localStorage.getItem("jwt"));
   const [httpError, setHttpError] = useState(null);
 
   const [cartItems, setCartItems] = useState<CartItemModel[]>([]);
@@ -12,12 +14,12 @@ export const CartPage = () => {
 
   useEffect(() => {
     const fetchCartItems = async () => {
-      if (localStorage.getItem("token")) {
+      if (jwt) {
         const url = `http://localhost:8080/api/cartItems`;
         const requestOptions = {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${jwt}`,
             "Content-Type": "application/json",
           },
         };
@@ -43,9 +45,13 @@ export const CartPage = () => {
     fetchCartItems().catch((error: any) => {
       setIsLoadingCartItems(false);
       setHttpError(error.message);
+
+      if (error.response && error.response.status === 401) {
+        EventBus.dispatch("logout", null);
+      }
     });
     window.scrollTo(0, 0);
-  }, []);
+  }, [jwt]);
 
   if (isLoadingCartItems) {
     return <SpinnerLoading />;
@@ -64,7 +70,7 @@ export const CartPage = () => {
     const requestOptions = {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${jwt}`,
         "Content-Type": "application/json",
       },
     };

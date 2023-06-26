@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    Page<Product> findByNameContaining(@RequestParam("name") String name, Pageable pageable);
+    Page<Product> findByNameContaining(String name, Pageable pageable);
 
-    Page<Product> findByCategory(@RequestParam("category") String category, Pageable pageable);
+    Page<Product> findByCategory(String category, Pageable pageable);
 
 }

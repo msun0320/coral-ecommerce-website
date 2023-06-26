@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export const ProductCard: React.FC<{ product: ProductModel }> = (props) => {
   return (
     <Link
-      to={`/product/${props.product.id}`}
+      to={`/products/${props.product.id}`}
       className="card border-0 text-decoration-none"
     >
       {props.product.img ? (

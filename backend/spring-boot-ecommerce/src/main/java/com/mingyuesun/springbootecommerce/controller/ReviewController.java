@@ -1,14 +1,13 @@
 package com.mingyuesun.springbootecommerce.controller;
 
-import com.mingyuesun.springbootecommerce.entity.Product;
 import com.mingyuesun.springbootecommerce.entity.Review;
 import com.mingyuesun.springbootecommerce.entity.User;
 import com.mingyuesun.springbootecommerce.requestmodels.ReviewRequest;
 import com.mingyuesun.springbootecommerce.service.ReviewService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -22,8 +21,8 @@ public class ReviewController {
     }
 
     @GetMapping
-    public List<Review> getReviews() {
-        return reviewService.getReviews();
+    public Page<Review> getReviews(Pageable pageable) {
+        return reviewService.getReviews(pageable);
     }
 
     @PostMapping

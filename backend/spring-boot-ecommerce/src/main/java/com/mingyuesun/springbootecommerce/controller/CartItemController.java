@@ -52,4 +52,5 @@ public class CartItemController {
     public void deleteCartItem(@PathVariable("cartItemId") Long cartItemId) throws Exception {
         cartItemService.deleteCartItem(cartItemId);
     }
+
 }

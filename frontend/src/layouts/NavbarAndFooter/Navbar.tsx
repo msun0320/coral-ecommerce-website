@@ -3,9 +3,9 @@ import logo from "./../../logo.svg";
 import cart from "./../../assets/images/icon-cart.svg";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import { useEffect, useState } from "react";
-import AuthService from "../../services/auth";
 
 export const Navbar = () => {
+  const [jwt, setJwt] = useState(localStorage.getItem("jwt"));
   const [httpError, setHttpError] = useState(null);
 
   // Cart Items Count State
@@ -14,12 +14,12 @@ export const Navbar = () => {
 
   useEffect(() => {
     const fetchCartItemsCount = async () => {
-      if (localStorage.getItem("token")) {
+      if (jwt) {
         const url = `http://localhost:8080/api/cartItems/count`;
         const requestOptions = {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            Authorization: `Bearer ${jwt}`,
             "Content-Type": "application/json",
           },
         };
@@ -36,9 +36,9 @@ export const Navbar = () => {
       setIsLoadingCartItemsCount(false);
       setHttpError(error.message);
     });
-  }, []);
+  }, [jwt]);
 
-  if (!isLoadingCartItemsCount) {
+  if (isLoadingCartItemsCount) {
     return <SpinnerLoading />;
   }
 
@@ -50,7 +50,7 @@ export const Navbar = () => {
     );
   }
 
-  const handleLogout = async () => AuthService.logout();
+  const handleLogout = () => localStorage.removeItem("jwt");
 
   return (
     <nav className="navbar navbar-expand-lg">
@@ -87,16 +87,16 @@ export const Navbar = () => {
           </ul>
         </div>
         <ul className="navbar-nav ms-auto d-flex flex-row">
-          {!localStorage.getItem("token") ? (
+          {!jwt ? (
             <li className="nav-item">
               <NavLink className="nav-link me-3 me-lg-0" to="/login">
-                Sign In
+                Login
               </NavLink>
             </li>
           ) : (
             <li className="nav-item">
               <button className="nav-link me-3 me-lg-0" onClick={handleLogout}>
-                Sign Out
+                Logout
               </button>
             </li>
           )}

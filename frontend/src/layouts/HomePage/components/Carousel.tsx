@@ -22,7 +22,7 @@ export const Carousel = () => {
 
       const responseJson = await response.json();
 
-      const responseData = responseJson._embedded.products;
+      const responseData = responseJson.content;
 
       const loadedProducts: ProductModel[] = [];
 
@@ -34,7 +34,6 @@ export const Carousel = () => {
           description: responseData[key].description,
           category: responseData[key].category,
           img: responseData[key].img,
-          inventory: responseData[key].inventory,
         });
       }
 
