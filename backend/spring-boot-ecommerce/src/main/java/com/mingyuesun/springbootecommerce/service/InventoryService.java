@@ -16,14 +16,14 @@ public class InventoryService {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public Inventory getInventory(Long inventoryId) throws Exception {
-        Optional<Inventory> inventory = inventoryRepository.findById(inventoryId);
+    public Inventory getInventory(Long productId) throws Exception {
+        Inventory inventory = inventoryRepository.findByProductId(productId);
 
-        if (!inventory.isPresent()) {
+        if (inventory == null) {
             throw new Exception("Inventory does not exist");
         }
 
-        return inventory.get();
+        return inventory;
     }
 
     public Inventory updateInventory(InventoryRequest inventoryRequest, Long inventoryId) throws Exception {

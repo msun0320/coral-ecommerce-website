@@ -47,6 +47,20 @@ export const ProductPage = () => {
       };
 
       setProduct(loadedProduct);
+
+      // Get inventory
+      const url: string = `http://localhost:8080/api/inventories/${loadedProduct.id}`;
+
+      const responseInventory = await fetch(url);
+
+      if (!responseInventory.ok) {
+        throw new Error("Something went wrong!");
+      }
+
+      const responseJsonInventory = await responseInventory.json();
+
+      setInventory(responseJsonInventory.quantity);
+
       setIsLoading(false);
     };
     fetchProduct().catch((error: any) => {
@@ -203,7 +217,7 @@ export const ProductPage = () => {
                   className="form-control rounded-0"
                   id="quantity"
                   value={quantity}
-                  min="1"
+                  min={1}
                   max={inventory}
                 />
               </div>
