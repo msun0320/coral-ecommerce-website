@@ -14,8 +14,7 @@ export const ProductsPage = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [search, setSearch] = useState("");
   const [searchUrl, setSearchUrl] = useState("");
-  const [categorySelection, setCategorySelection] =
-    useState("Product category");
+  const [categorySelection, setCategorySelection] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -26,7 +25,11 @@ export const ProductsPage = () => {
       if (searchUrl === "") {
         url = `${baseUrl}?page=${currentPage - 1}&size=${productsPerPage}`;
       } else {
-        url = baseUrl + searchUrl;
+        let searchWithPage = searchUrl.replace(
+          "<pageNumber>",
+          `${currentPage - 1}`
+        );
+        url = baseUrl + searchWithPage;
       }
 
       const response = await fetch(url);
@@ -77,16 +80,16 @@ export const ProductsPage = () => {
     );
   }
 
-  const searchHandleChange = () => {
+  const searchHandleChange = (e: any) => {
+    e.preventDefault();
     setCurrentPage(1);
     if (search === "") {
       setSearchUrl("");
     } else {
       setSearchUrl(
-        `/search?name=${search}&page=${currentPage - 1}&size=${productsPerPage}`
+        `/search?name=${search}&page=<pageNumber>&size=${productsPerPage}`
       );
     }
-    setCategorySelection("Product category");
   };
 
   const categoryField = (value: string) => {
@@ -98,11 +101,11 @@ export const ProductsPage = () => {
     ) {
       setCategorySelection(value);
       setSearchUrl(
-        `/category/${value}?page=${currentPage - 1}&size=${productsPerPage}`
+        `/category/${value}?page=<pageNumber>&size=${productsPerPage}`
       );
     } else {
       setCategorySelection("All");
-      setSearchUrl(`?page=${currentPage - 1}&size=${productsPerPage}`);
+      setSearchUrl(`?page=<pageNumber>&size=${productsPerPage}`);
     }
   };
 
@@ -119,24 +122,18 @@ export const ProductsPage = () => {
     <div className="py-3">
       <div className="container-fluid row">
         <div className="col-12 col-md-3">
-          <div className="input-group mb-3">
+          <form onSubmit={searchHandleChange}>
             <input
               type="text"
               className="form-control"
               placeholder="Search products..."
               aria-label="Search products..."
-              aria-describedby="button-addon2"
               onChange={(e) => setSearch(e.target.value)}
             />
-            <button
-              className="btn"
-              type="button"
-              id="button-addon2"
-              onClick={() => searchHandleChange()}
-            >
+            <button className="btn" type="submit">
               Search
             </button>
-          </div>
+          </form>
 
           <div>
             <input
@@ -158,7 +155,7 @@ export const ProductsPage = () => {
               type="radio"
               className="btn-check"
               name="options"
-              id="option1"
+              id="option2"
               autoComplete="off"
             />
             <label
@@ -173,7 +170,7 @@ export const ProductsPage = () => {
               type="radio"
               className="btn-check"
               name="options"
-              id="option2"
+              id="option3"
               autoComplete="off"
             />
             <label
@@ -188,7 +185,7 @@ export const ProductsPage = () => {
               type="radio"
               className="btn-check"
               name="options"
-              id="option3"
+              id="option4"
               autoComplete="off"
             />
             <label

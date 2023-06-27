@@ -20,7 +20,7 @@ export const ReviewListPage = () => {
 
   useEffect(() => {
     const fetchProductReviewsData = async () => {
-      const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByProductId?productId=${productId}&page=${
+      const reviewUrl: string = `http://localhost:8080/api/reviews/product/${productId}?page=${
         currentPage - 1
       }&size=${reviewsPerPage}`;
 
@@ -32,10 +32,10 @@ export const ReviewListPage = () => {
 
       const responseJsonReviews = await responseReviews.json();
 
-      const responseData = responseJsonReviews._embedded.reviews;
+      const responseData = responseJsonReviews.content;
 
-      setTotalAmountOfReviews(responseJsonReviews.page.totalElements);
-      setTotalPages(responseJsonReviews.page.totalPages);
+      setTotalAmountOfReviews(responseJsonReviews.totalElements);
+      setTotalPages(responseJsonReviews.totalPages);
 
       const loadedReviews: ReviewModel[] = [];
 

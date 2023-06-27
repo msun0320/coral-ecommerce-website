@@ -16,7 +16,7 @@ public class InventoryController {
         this.inventoryService = inventoryService;
     }
 
-    @GetMapping("/{productId}")
+    @GetMapping("/product/{productId}")
     public Inventory getInventory(@PathVariable("productId") long productId) throws Exception {
         return inventoryService.getInventory(productId);
     }

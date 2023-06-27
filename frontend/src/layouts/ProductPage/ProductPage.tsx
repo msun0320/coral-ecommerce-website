@@ -7,6 +7,7 @@ import { LatestReviews } from "./LatestReviews";
 import { LeaveAReview } from "../Utils/LeaveAReview";
 import ReviewRequestModel from "../../models/ReviewRequestModel";
 import CartItemRequestModel from "../../models/CartItemRequestModel";
+import { Link, useHistory } from "react-router-dom";
 
 export const ProductPage = () => {
   const [jwt, setJwt] = useState(localStorage.getItem("jwt"));
@@ -21,7 +22,9 @@ export const ProductPage = () => {
   const [totalStars, setTotalStars] = useState(0);
   const [isLoadingReview, setIsLoadingReview] = useState(true);
 
-  const [isReviewLeft, setIsReviewLeft] = useState(false);
+  const [reviewLeftCount, setReviewLeftCount] = useState(0);
+
+  const history = useHistory();
 
   const productId = window.location.pathname.split("/")[2];
 
@@ -49,7 +52,7 @@ export const ProductPage = () => {
       setProduct(loadedProduct);
 
       // Get inventory
-      const url: string = `http://localhost:8080/api/inventories/${loadedProduct.id}`;
+      const url: string = `http://localhost:8080/api/inventories/product/${productId}`;
 
       const responseInventory = await fetch(url);
 
@@ -71,7 +74,7 @@ export const ProductPage = () => {
 
   useEffect(() => {
     const fetchProductReviews = async () => {
-      const reviewUrl: string = `http://localhost:8080/api/reviews/search/findByProductId?productId=${productId}`;
+      const reviewUrl: string = `http://localhost:8080/api/reviews/product/${productId}`;
 
       const responseReviews = await fetch(reviewUrl);
 
@@ -81,7 +84,7 @@ export const ProductPage = () => {
 
       const responseJsonReviews = await responseReviews.json();
 
-      const responseData = responseJsonReviews._embedded.reviews;
+      const responseData = responseJsonReviews.content;
 
       const loadedReviews: ReviewModel[] = [];
 
@@ -114,7 +117,7 @@ export const ProductPage = () => {
       setIsLoadingReview(false);
       setHttpError(error.message);
     });
-  }, [isReviewLeft]);
+  }, [reviewLeftCount]);
 
   if (isLoading || isLoadingReview) {
     return <SpinnerLoading />;
@@ -133,6 +136,12 @@ export const ProductPage = () => {
       Number(productId),
       quantity
     );
+
+    if (!jwt) {
+      history.push("/login");
+      return;
+    }
+
     const url = "http://localhost:8080/api/cartItems";
     const requestOptions = {
       method: "POST",
@@ -179,7 +188,7 @@ export const ProductPage = () => {
     if (!returnResponse.ok) {
       throw new Error("Something went wrong!");
     }
-    setIsReviewLeft(true);
+    setReviewLeftCount((count) => count + 1);
   }
 
   return (
@@ -222,14 +231,14 @@ export const ProductPage = () => {
                 />
               </div>
               <div className="col-auto">
-                <button onClick={addToCart} type="submit" className="btn">
+                <button onClick={addToCart} className="btn">
                   Add to Cart
                 </button>
               </div>
               <div className="col-auto">
-                <button type="submit" className="btn">
+                <Link to="/cart" className="btn">
                   Go to Cart
-                </button>
+                </Link>
               </div>
             </form>
           </div>

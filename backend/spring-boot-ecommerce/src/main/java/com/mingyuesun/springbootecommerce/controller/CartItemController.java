@@ -21,8 +21,8 @@ public class CartItemController {
     }
 
     @GetMapping
-    public List<CartItem> getCartItems() {
-        return cartItemService.getCartItems();
+    public List<CartItem> getCartItems(@AuthenticationPrincipal User user) {
+        return cartItemService.getCartItems(user);
     }
 
     @GetMapping("/{cartItemId}")

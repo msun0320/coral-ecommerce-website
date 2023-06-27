@@ -29,8 +29,8 @@ public class CartItemService {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public List<CartItem> getCartItems() {
-        return cartItemRepository.findAll();
+    public List<CartItem> getCartItems(User user) {
+        return cartItemRepository.findByUser(user);
     }
 
     public CartItem getCartItem(Long cartItemId) throws Exception {

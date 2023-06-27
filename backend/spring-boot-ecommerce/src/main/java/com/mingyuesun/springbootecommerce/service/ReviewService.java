@@ -30,6 +30,10 @@ public class ReviewService {
         return reviewRepository.findAll(pageable);
     }
 
+    public Page<Review> getReviewsByProductId(Long productId, Pageable pageable) {
+        return reviewRepository.findByProductId(productId, pageable);
+    }
+
     public void postReview(User user, ReviewRequest reviewRequest) throws Exception {
         Review review = new Review();
         review.setProduct(productRepository.findById(reviewRequest.getProductId()).get());

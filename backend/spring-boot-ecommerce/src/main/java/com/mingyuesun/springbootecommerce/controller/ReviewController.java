@@ -25,6 +25,12 @@ public class ReviewController {
         return reviewService.getReviews(pageable);
     }
 
+    @GetMapping("/product/{productId}")
+    public Page<Review> getReviewsByProductId(@PathVariable Long productId,
+                                              Pageable pageable) {
+        return reviewService.getReviewsByProductId(productId, pageable);
+    }
+
     @PostMapping
     public void postReview(@AuthenticationPrincipal User user,
                            @RequestBody ReviewRequest reviewRequest) throws Exception {
