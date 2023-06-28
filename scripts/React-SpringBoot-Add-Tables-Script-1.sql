@@ -86,8 +86,8 @@ CREATE TABLE `user` (
   `username` varchar(30) DEFAULT NULL,
   `password` varchar(60) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `first_name` varchar(50) DEFAULT NULL,
-  `last_name` varchar(50) DEFAULT NULL,
+  -- `first_name` varchar(50) DEFAULT NULL,
+  -- `last_name` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = latin1;
 

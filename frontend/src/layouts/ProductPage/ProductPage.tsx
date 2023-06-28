@@ -7,7 +7,7 @@ import { LatestReviews } from "./LatestReviews";
 import { LeaveAReview } from "../Utils/LeaveAReview";
 import ReviewRequestModel from "../../models/ReviewRequestModel";
 import CartItemRequestModel from "../../models/CartItemRequestModel";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 export const ProductPage = () => {
   const [jwt, setJwt] = useState(localStorage.getItem("jwt"));
@@ -138,7 +138,7 @@ export const ProductPage = () => {
     );
 
     if (!jwt) {
-      history.push("/login");
+      history.push(`/login`);
       return;
     }
 

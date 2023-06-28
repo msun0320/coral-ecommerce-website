@@ -1,6 +1,6 @@
 import { useState } from "react";
 import LoginRequestModel from "../../models/LoginRequestModel";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -12,7 +12,7 @@ export const LoginPage = () => {
     e.preventDefault();
 
     const loginRequestModel = new LoginRequestModel(username, password);
-    const url: string = "http://localhsost:8080/api/auth/login";
+    const url: string = "http://localhost:8080/api/auth/login";
     const requestOptions = {
       method: "POST",
       headers: {
@@ -31,7 +31,7 @@ export const LoginPage = () => {
       localStorage.setItem("jwt", JSON.stringify(loginResponseJson.jwt));
     }
 
-    history.goBack();
+    history.push("/home");
     window.location.reload();
   };
 
@@ -47,7 +47,6 @@ export const LoginPage = () => {
                 type="text"
                 id="username"
                 className="form-control mt-1"
-                placeholder="Enter username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -59,7 +58,6 @@ export const LoginPage = () => {
                 type="password"
                 id="password"
                 className="form-control mt-1"
-                placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -72,6 +70,7 @@ export const LoginPage = () => {
             </div>
           </div>
         </form>
+        <Link to="/register">Register</Link>
       </div>
     </div>
   );

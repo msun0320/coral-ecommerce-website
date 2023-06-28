@@ -32,8 +32,8 @@ public class UserService {
         }
         User user = new User();
         user.setEmail(registrationBody.getEmail());
-        user.setFirstName(registrationBody.getFirstName());
-        user.setLastName(registrationBody.getLastName());
+//        user.setFirstName(registrationBody.getFirstName());
+//        user.setLastName(registrationBody.getLastName());
         user.setUsername(registrationBody.getUsername());
         user.setPassword(encryptionService.encryptPassword(registrationBody.getPassword()));
         return userRepository.save(user);

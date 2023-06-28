@@ -50,7 +50,10 @@ export const Navbar = () => {
     );
   }
 
-  const handleLogout = () => localStorage.removeItem("jwt");
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    window.location.reload();
+  };
 
   return (
     <nav className="navbar navbar-expand-lg">

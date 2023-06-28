@@ -1,10 +1,13 @@
 import { useState } from "react";
 import RegistrationRequestModel from "../../models/RegistrationRequestModel";
+import { useHistory } from "react-router-dom";
 
 export const RegisterPage = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const history = useHistory();
 
   const handleRegister = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -14,7 +17,8 @@ export const RegisterPage = () => {
       email,
       password
     );
-    const url = "http://localhsost:8080/api/auth/register";
+
+    const url = "http://localhost:8080/api/auth/register";
     const requestOptions = {
       method: "POST",
       headers: {
@@ -27,6 +31,8 @@ export const RegisterPage = () => {
     if (!loginResponse.ok) {
       throw new Error("Something went wrong!");
     }
+
+    history.push("/login");
   };
 
   return (
@@ -41,7 +47,6 @@ export const RegisterPage = () => {
                 type="text"
                 id="username"
                 className="form-control mt-1"
-                placeholder="Enter username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required
@@ -53,7 +58,6 @@ export const RegisterPage = () => {
                 type="email"
                 id="email"
                 className="form-control mt-1"
-                placeholder="Enter email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -65,13 +69,11 @@ export const RegisterPage = () => {
                 type="password"
                 id="password"
                 className="form-control mt-1"
-                placeholder="Enter password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
                 maxLength={32}
-                pattern="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$"
               />
             </div>
             <div className="d-grid gap-2 mt-3">

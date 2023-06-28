@@ -22,11 +22,11 @@ public class RegistrationRequest {
     @Size(min = 6, max = 32)
     private String password;
 
-    @NotNull
-    @NotBlank
-    private String firstName;
-
-    @NotNull
-    private String lastName;
+//    @NotNull
+//    @NotBlank
+//    private String firstName;
+//
+//    @NotNull
+//    private String lastName;
 
 }
