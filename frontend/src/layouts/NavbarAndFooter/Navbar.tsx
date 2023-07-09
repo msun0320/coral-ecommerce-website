@@ -92,6 +92,11 @@ export const Navbar = () => {
                 About
               </NavLink>
             </li>
+            <li className="nav-item mx-3">
+              <NavLink className="nav-link" to="/contact">
+                Contact
+              </NavLink>
+            </li>
           </ul>
         </div>
         <ul className="navbar-nav ms-auto d-flex flex-row">

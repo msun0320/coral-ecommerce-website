@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import EventBus from "./common/EventBus";
 import { CartPage } from "./layouts/CartPage/CartPage";
 import { AboutPage } from "./layouts/AboutPage/AboutPage";
+import { ContactPage } from "./layouts/ContactPage/ContactPage";
 
 export const App = () => {
   useEffect(() => {
@@ -48,6 +49,9 @@ export const App = () => {
           </Route>
           <Route path="/about">
             <AboutPage />
+          </Route>
+          <Route path="/contact">
+            <ContactPage />
           </Route>
           <Route path="/reviewlist/:productId">
             <ReviewListPage />
