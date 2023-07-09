@@ -34,7 +34,7 @@ public class ReviewService {
         return reviewRepository.findByProductId(productId, pageable);
     }
 
-    public void postReview(User user, ReviewRequest reviewRequest) throws Exception {
+    public Review postReview(User user, ReviewRequest reviewRequest) throws Exception {
         Review review = new Review();
         review.setProduct(productRepository.findById(reviewRequest.getProductId()).get());
         review.setRating(reviewRequest.getRating());
@@ -45,7 +45,7 @@ public class ReviewService {
             ).orElse(null));
         }
         review.setCreatedAt(Date.valueOf(LocalDate.now()));
-        reviewRepository.save(review);
+        return reviewRepository.save(review);
     }
 
 }

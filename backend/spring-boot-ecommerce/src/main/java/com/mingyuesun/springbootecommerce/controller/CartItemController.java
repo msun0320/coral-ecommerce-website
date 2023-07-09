@@ -42,10 +42,10 @@ public class CartItemController {
     }
 
     @PatchMapping("/{cartItemId}")
-    public void updateCartItem(@AuthenticationPrincipal User user,
+    public CartItem updateCartItem(@AuthenticationPrincipal User user,
                                @RequestBody CartItemRequest cartItemRequest,
-                               @PathVariable Long cartItemId) throws Exception {
-        cartItemService.updateCartItem(user, cartItemRequest, cartItemId);
+                               @PathVariable("cartItemId") Long cartItemId) throws Exception {
+        return cartItemService.updateCartItem(user, cartItemRequest, cartItemId);
     }
 
     @DeleteMapping("/{cartItemId}")

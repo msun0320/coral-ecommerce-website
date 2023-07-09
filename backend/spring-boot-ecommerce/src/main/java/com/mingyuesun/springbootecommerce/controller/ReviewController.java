@@ -26,15 +26,15 @@ public class ReviewController {
     }
 
     @GetMapping("/product/{productId}")
-    public Page<Review> getReviewsByProductId(@PathVariable Long productId,
+    public Page<Review> getReviewsByProductId(@PathVariable("productId") Long productId,
                                               Pageable pageable) {
         return reviewService.getReviewsByProductId(productId, pageable);
     }
 
     @PostMapping
-    public void postReview(@AuthenticationPrincipal User user,
+    public Review postReview(@AuthenticationPrincipal User user,
                            @RequestBody ReviewRequest reviewRequest) throws Exception {
-        reviewService.postReview(user, reviewRequest);
+        return reviewService.postReview(user, reviewRequest);
     }
 
 }

@@ -139,6 +139,18 @@ export const ProductPage = () => {
 
     if (!jwt) {
       history.push(`/login`);
+      // let localCart = JSON.parse(localStorage.getItem("Cart") || "[]");
+      // let existingItem = localCart.find(
+      //   (cartItem: { Id: number }) => cartItem.Id === Number(productId)
+      // );
+
+      // if (existingItem) {
+      //   existingItem.quantity += quantity;
+      // } else {
+      //   localCart.push(cartItemRequestModel);
+      // }
+
+      // localStorage.setItem("cart", JSON.stringify(localCart));
       return;
     }
 

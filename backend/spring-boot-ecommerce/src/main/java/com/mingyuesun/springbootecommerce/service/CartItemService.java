@@ -69,7 +69,7 @@ public class CartItemService {
         return cartItemRepository.save(cartItem);
     }
 
-    public void updateCartItem(User user, CartItemRequest cartItemRequest, Long cartItemId) throws Exception {
+    public CartItem updateCartItem(User user, CartItemRequest cartItemRequest, Long cartItemId) throws Exception {
         Inventory inventory = inventoryRepository.findByProductId(cartItemRequest.getProductId());
 
         if (inventory == null || inventory.getQuantity() <= cartItemRequest.getQuantity()) {
@@ -79,6 +79,8 @@ public class CartItemService {
         CartItem cartItem = cartItemRepository.findByUserAndProduct(user, inventory.getProduct());
 
         cartItem.setQuantity(cartItemRequest.getQuantity());
+
+        return cartItemRepository.save(cartItem);
     }
 
     public void deleteCartItem(Long cartItemId) throws Exception {

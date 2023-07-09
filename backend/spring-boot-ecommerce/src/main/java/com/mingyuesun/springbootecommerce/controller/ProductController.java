@@ -5,7 +5,6 @@ import com.mingyuesun.springbootecommerce.requestmodels.ProductRequest;
 import com.mingyuesun.springbootecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,7 @@ public class ProductController {
     }
 
     @GetMapping("/category/{category}")
-    public Page<Product> getProductsByCategory(@PathVariable String category,
+    public Page<Product> getProductsByCategory(@PathVariable("category") String category,
                                                Pageable pageable) {
         return productService.getProductsByCategory(category, pageable);
     }
@@ -39,7 +38,7 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public Product getProduct(@PathVariable Long productId) throws Exception {
+    public Product getProduct(@PathVariable("productId") Long productId) throws Exception {
         return productService.getProduct(productId);
     }
 

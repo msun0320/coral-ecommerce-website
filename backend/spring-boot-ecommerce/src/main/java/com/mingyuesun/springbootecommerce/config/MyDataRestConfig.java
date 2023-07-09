@@ -1,6 +1,5 @@
 package com.mingyuesun.springbootecommerce.config;
 
-import com.mingyuesun.springbootecommerce.entity.Order;
 import com.mingyuesun.springbootecommerce.entity.Product;
 import com.mingyuesun.springbootecommerce.entity.Review;
 import org.springframework.context.annotation.Configuration;

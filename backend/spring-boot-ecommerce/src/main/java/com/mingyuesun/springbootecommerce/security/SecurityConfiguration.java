@@ -1,4 +1,4 @@
-package com.mingyuesun.springbootecommerce.config;
+package com.mingyuesun.springbootecommerce.security;
 
 import com.mingyuesun.springbootecommerce.security.JWTRequestFilter;
 import org.springframework.context.annotation.Bean;
