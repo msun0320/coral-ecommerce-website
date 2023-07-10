@@ -44,7 +44,7 @@ DROP TABLE IF EXISTS `product`;
 
 CREATE TABLE `product` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
+  `name` varchar(70) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `price` FLOAT DEFAULT NULL,
   `category` varchar(11) DEFAULT NULL,
