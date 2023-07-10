@@ -1,4 +1,6 @@
-.btn {
+.btn,
+.btn-check + .btn:hover,
+.btn-check:checked + label.btn {
   background-color: #000;
   color: #fff;
   border-radius: 0;
@@ -6,6 +8,11 @@
 
 .btn:hover {
   border: 1px solid #000;
+}
+
+.btn-check + .btn {
+  background-color: transparent;
+  color: #000;
 }
 
 .hero {
@@ -61,12 +68,38 @@
   right: -10%;
 }
 
+.card img {
+  width: 80%;
+  height: 250px;
+  margin: 20px auto;
+}
+
 .instagram-section .d-grid {
   grid-template-columns: repeat(3, 1fr);
 }
 
 .product-grid {
   grid-template-columns: repeat(2, 1fr);
+}
+
+.active > .page-link {
+  background-color: #000;
+  border-color: #000;
+  color: #fff !important;
+}
+
+.active > .page-link:hover,
+.active > .page-link:focus {
+  color: #fff;
+}
+
+.product img {
+  height: 300px;
+}
+
+.login form,
+.register form {
+  max-width: 500px;
 }
 
 @media (min-width: 576px) {
@@ -87,5 +120,9 @@
 
   .product-grid {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .product img {
+    height: 400px;
   }
 }

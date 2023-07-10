@@ -55,6 +55,9 @@ public class CartItemService {
             throw new Exception("Product is not available");
         }
 
+        inventory.setQuantity(inventory.getQuantity() - cartItemRequest.getQuantity());
+        inventoryRepository.save(inventory);
+
         CartItem cartItem = cartItemRepository.findByUserAndProduct(user, inventory.getProduct());
 
         if (cartItem != null) {
@@ -90,7 +93,13 @@ public class CartItemService {
             throw new Exception("Product is not in cart");
         }
 
+        Inventory inventory = inventoryRepository.findByProductId(cartItem.get().getProduct().getId());
+
+        inventory.setQuantity(inventory.getQuantity() + cartItem.get().getQuantity());
+        inventoryRepository.save(inventory);
+
         cartItemRepository.delete(cartItem.get());
+
     }
 
 }

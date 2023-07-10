@@ -33,9 +33,11 @@ export const Pagination: React.FC<{
 
   return (
     <nav aria-label="...">
-      <ul className="pagination">
+      <ul className="pagination mt-3 d-flex justify-content-center">
         <li className="page-item" onClick={() => props.paginate(1)}>
-          <button className="page-link">First Page</button>
+          <button className="page-link text-black shadow-none rounded-0">
+            First Page
+          </button>
         </li>
         {pageNumbers.map((number) => (
           <li
@@ -45,14 +47,18 @@ export const Pagination: React.FC<{
               "page-item " + (props.currentPage === number ? "active" : "")
             }
           >
-            <button className="page-link">{number}</button>
+            <button className="page-link text-black shadow-none">
+              {number}
+            </button>
           </li>
         ))}
         <li
           className="page-item"
           onClick={() => props.paginate(props.totalPages)}
         >
-          <button className="page-link">Last Page</button>
+          <button className="page-link text-black shadow-none rounded-0">
+            Last Page
+          </button>
         </li>
       </ul>
     </nav>

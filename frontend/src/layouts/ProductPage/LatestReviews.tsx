@@ -9,7 +9,7 @@ export const LatestReviews: React.FC<{
   return (
     <div className="row">
       <div className="col-lg-2">
-        <h3>Latest Reviews: </h3>
+        <h3>Latest Reviews</h3>
       </div>
       <div className="col-lg-10">
         {props.reviews.length > 0 ? (
@@ -23,7 +23,7 @@ export const LatestReviews: React.FC<{
               className="btn"
               to={`/reviewlist/${props.productId}`}
             >
-              See all reviews.
+              See All Reviews
             </Link>
           </>
         ) : (

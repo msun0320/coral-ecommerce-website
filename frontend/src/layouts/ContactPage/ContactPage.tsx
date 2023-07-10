@@ -5,7 +5,7 @@ export const ContactPage = () => {
         <div className="row">
           <div className="col-md-6 d-flex flex-column justify-content-center">
             <h2>Contact Us</h2>
-            <p>
+            <p className="me-5">
               Have a question or feedback? We would love to hear from you.
               Please fill out the form and we'll get back to you as soon as
               possible.
@@ -13,46 +13,52 @@ export const ContactPage = () => {
           </div>
           <div className="col-md-6">
             <form
+              className="p-4 border rounded shadow"
               action="mailto:mingyueees@gmail.com"
               method="POST"
               encType="multipart/form-data"
             >
-              <div className="form-group mb-2">
-                <label htmlFor="name">Name</label>
+              <div className="form-group mb-3">
+                <label htmlFor="name" className="form-label">
+                  Name
+                </label>
                 <input
                   type="text"
-                  className="form-control"
                   id="name"
-                  placeholder="Enter your name"
+                  className="form-control"
+                  required
                 />
               </div>
-
-              <div className="form-group mb-2">
-                <label htmlFor="email">Email address</label>
+              <div className="form-group mb-3">
+                <label htmlFor="email" className="form-label">
+                  Email
+                </label>
                 <input
                   type="email"
-                  className="form-control"
                   id="email"
-                  placeholder="Enter your email"
-                />
-              </div>
-
-              <div className="form-group mb-2">
-                <label htmlFor="message">Message</label>
-                <textarea
                   className="form-control"
-                  id="message"
-                  rows={4}
-                  placeholder="Enter your message"
+                  required
                 />
               </div>
-
-              <button type="submit" className="btn">
-                Submit
-              </button>
+              <div className="form-group mb-3">
+                <label htmlFor="message" className="form-label">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  className="form-control"
+                  rows={4}
+                  required
+                />
+              </div>
+              <div className="d-grid gap-2">
+                <button type="submit" className="btn">
+                  Submit
+                </button>
+              </div>
             </form>
           </div>
-        </div>{" "}
+        </div>
       </div>
     </div>
   );

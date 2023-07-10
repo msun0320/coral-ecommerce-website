@@ -12,7 +12,7 @@ export const LeaveAReview: React.FC<{ submitReview: any }> = (props) => {
   }
 
   return (
-    <div className="dropdown" style={{ cursor: "pointer" }}>
+    <div className="dropdown mb-4" style={{ cursor: "pointer" }}>
       <h5
         className="dropdown-toggle"
         id="dropdownMenuButton1"
@@ -81,10 +81,10 @@ export const LeaveAReview: React.FC<{ submitReview: any }> = (props) => {
           </button>
         </li>
       </ul>
-      <StarsReview rating={starInput} size={32} />
+      <StarsReview rating={starInput} size={24} />
 
       {displayInput && (
-        <form method="POST" action="#">
+        <form className="mt-2" method="POST" action="#">
           <div>
             <label className="form-label">Description</label>
             <textarea

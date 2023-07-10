@@ -36,7 +36,7 @@ export const AboutPage = () => {
             </p>
           </div>
           <div className="col-md-6">
-            <div className="image-wrapper d-flex justify-content-center">
+            <div className="image-wrapper d-flex justify-content-center mx-5">
               <img
                 src="images/image-about-us.jpg"
                 alt="About Us"

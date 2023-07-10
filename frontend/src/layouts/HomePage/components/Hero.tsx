@@ -6,7 +6,7 @@ export const Hero = () => {
       <div className="container-fluid d-flex justify-content-center align-items-center">
         <div className="w-75">
           <h1>Collections</h1>
-          <p className="w-75 my-md-4">
+          <p className="w-75 my-md-4 fs-5">
             You can explore and shop many different collection from various
             brands here.
           </p>

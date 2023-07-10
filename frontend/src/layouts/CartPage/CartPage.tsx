@@ -78,46 +78,53 @@ export const CartPage = () => {
     if (!returnResponse.ok) {
       throw new Error("Something went wrong!");
     }
+    window.location.reload();
   }
 
   return (
-    <div>
-      <div className="container-fluid">
-        <h3>Cart</h3>
-        <div>
-          {cartItems.map((cartItem) => (
-            <div key={cartItem.id}>
-              {cartItem.product?.img ? (
-                <img src={cartItem.product?.img} alt={cartItem.product?.name} />
-              ) : (
-                <img
-                  src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-                  alt="Adicolor Classics Joggers"
-                />
-              )}
-              <h5>{cartItem.product?.name}</h5>
-              <p>${cartItem.product?.price}</p>
-              <p>{cartItem.quantity}</p>
-              <button
-                onClick={() => deleteCartItem(cartItem.id)}
-                type="submit"
-                className="btn"
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </div>
-
-        <div>
-          <h4>Cart total</h4>
-          <p>
-            Total <span>${total}</span>
-          </p>
-          <Link type="button" className="btn" to={"/checkout"}>
-            checkout
-          </Link>
-        </div>
+    <div className="cart">
+      <div className="container-fluid mt-3">
+        <h3 className="mb-4">Shopping Cart</h3>
+        {cartItems.length === 0 ? (
+          <p>Your cart is empty.</p>
+        ) : (
+          <div>
+            {cartItems.map((cartItem) => (
+              <div className="card mb-3" key={cartItem.id}>
+                <div className="row no-gutters">
+                  <div className="col-md-4 d-flex">
+                    {cartItem.product?.img ? (
+                      <img
+                        src={cartItem.product?.img}
+                        alt={cartItem.product?.name}
+                        className="card-img w-auto"
+                      />
+                    ) : (
+                      <img
+                        src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+                        alt="Fjallraven - Foldsack No. 1 Backpack, Fits 15"
+                      />
+                    )}
+                  </div>
+                  <div className="col-md-8">
+                    <div className="card-body">
+                      <h5 className="card-title">{cartItem.product?.name}</h5>
+                      <p className="card-text">${cartItem.product?.price}</p>
+                      <p className="card-text">Quantity: {cartItem.quantity}</p>
+                      <button
+                        className="btn"
+                        onClick={() => deleteCartItem(cartItem.id)}
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+            <p className="font-weight-bold">Total: ${total}</p>
+          </div>
+        )}
       </div>
     </div>
   );

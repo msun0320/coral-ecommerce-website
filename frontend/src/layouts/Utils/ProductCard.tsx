@@ -1,5 +1,5 @@
 import React from "react";
-import ProductModel from "../../../models/ProductModel";
+import ProductModel from "../../models/ProductModel";
 import { Link } from "react-router-dom";
 
 export const ProductCard: React.FC<{ product: ProductModel }> = (props) => {
@@ -16,9 +16,9 @@ export const ProductCard: React.FC<{ product: ProductModel }> = (props) => {
         />
       ) : (
         <img
-          src="images/products/adicolor-classics-joggers.png"
+          src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
           className="card-img-top rounded-0"
-          alt="Adicolor Classics Joggers"
+          alt="Fjallraven - Foldsack No. 1 Backpack, Fits 15"
         />
       )}
       <div className="card-body rounded-0">

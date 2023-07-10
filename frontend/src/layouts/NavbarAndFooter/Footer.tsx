@@ -3,6 +3,7 @@ import facebook from "./../../assets/images/icon-facebook.svg";
 import twitter from "./../../assets/images/icon-twitter.svg";
 import linkedin from "./../../assets/images/icon-linkedin.svg";
 import instagram from "./../../assets/images/icon-instagram.svg";
+import { NavLink } from "react-router-dom";
 
 export const Footer = () => {
   return (
@@ -57,27 +58,27 @@ export const Footer = () => {
             <div className="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
               <h6 className="text-uppercase fw-bold mb-4">Catalog</h6>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   Necklaces
                 </a>
               </p>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   Hoodies
                 </a>
               </p>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   Jewelry Box
                 </a>
               </p>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   T-Shirt
                 </a>
               </p>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   Jacket
                 </a>
               </p>
@@ -85,27 +86,30 @@ export const Footer = () => {
             <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
               <h6 className="text-uppercase fw-bold mb-4">About us</h6>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   Our Producers
                 </a>
               </p>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   Sitemap
                 </a>
               </p>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   FAQ
                 </a>
               </p>
               <p>
-                <a href="#" className="text-reset">
+                <NavLink
+                  to="/about"
+                  className="text-reset text-decoration-none"
+                >
                   About Us
-                </a>
+                </NavLink>
               </p>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   Terms & Conditions
                 </a>
               </p>
@@ -113,27 +117,30 @@ export const Footer = () => {
             <div className="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
               <h6 className="text-uppercase fw-bold mb-4">CUSTOMER SERVICES</h6>
               <p>
-                <a href="#" className="text-reset">
+                <NavLink
+                  to="/contact"
+                  className="text-reset text-decoration-none"
+                >
                   Contact Us
-                </a>
+                </NavLink>
               </p>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   Track Your Order
                 </a>
               </p>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   Product Care & Repair
                 </a>
               </p>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   Book an Appointment
                 </a>
               </p>
               <p>
-                <a href="#" className="text-reset">
+                <a href="#" className="text-reset text-decoration-none">
                   Shipping & Returns
                 </a>
               </p>

@@ -7,7 +7,7 @@ import { LatestReviews } from "./LatestReviews";
 import { LeaveAReview } from "../Utils/LeaveAReview";
 import ReviewRequestModel from "../../models/ReviewRequestModel";
 import CartItemRequestModel from "../../models/CartItemRequestModel";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export const ProductPage = () => {
   const [jwt, setJwt] = useState(localStorage.getItem("jwt"));
@@ -204,24 +204,24 @@ export const ProductPage = () => {
   }
 
   return (
-    <div className="py-3">
+    <div className="product py-3">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-6 d-flex justify-content-center align-items-center">
             {product?.img ? (
-              <img className="w-100" src={product?.img} alt={product?.name} />
+              <img className="w-auto" src={product?.img} alt={product?.name} />
             ) : (
               <img
                 src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-                alt="Adicolor Classics Joggers"
+                alt="Fjallraven - Foldsack No. 1 Backpack, Fits 15"
               />
             )}
           </div>
           <div className="my-4 col-md-6 ps-md-3">
             <h5 className="text-secondary">{product?.category}</h5>
-            <h2>{product?.name}</h2>
-            <StarsReview rating={totalStars} size={32} />
-            <p>
+            <h3>{product?.name}</h3>
+            <StarsReview rating={totalStars} size={24} />
+            <p className="mt-3">
               <strong>${product?.price}</strong> + Free Shipping{" "}
               {inventory > 0 ? (
                 <span className="text-success ms-3">In Stock</span>

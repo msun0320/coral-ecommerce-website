@@ -83,7 +83,7 @@ export const ReviewListPage = () => {
 
   return (
     <div>
-      <div className="container">
+      <div className="container-fluid mt-3">
         <h3>Customer reviews: ({reviews.length})</h3>
         <p>
           {indexOfFirstReview + 1} to {lastItem} of {totalAmountOfReviews}{" "}

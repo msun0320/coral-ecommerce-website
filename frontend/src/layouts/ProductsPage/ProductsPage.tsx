@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ProductModel from "../../models/ProductModel";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
-import { ProductCard } from "../HomePage/components/ProductCard";
+import { ProductCard } from "../Utils/ProductCard";
 import { Pagination } from "../Utils/Pagination";
 
 export const ProductsPage = () => {
@@ -122,10 +122,10 @@ export const ProductsPage = () => {
     <div className="py-3">
       <div className="container-fluid row">
         <div className="col-12 col-md-3">
-          <form onSubmit={searchHandleChange}>
+          <form className="d-flex" onSubmit={searchHandleChange}>
             <input
               type="text"
-              className="form-control"
+              className="form-control rounded-0"
               placeholder="Search products..."
               aria-label="Search products..."
               onChange={(e) => setSearch(e.target.value)}
@@ -135,66 +135,74 @@ export const ProductsPage = () => {
             </button>
           </form>
 
-          <div>
-            <input
-              type="radio"
-              className="btn-check"
-              name="options"
-              id="option1"
-              autoComplete="off"
-            />
-            <label
-              className="btn"
-              htmlFor="option1"
-              onClick={() => categoryField("All")}
-            >
-              All
-            </label>
+          <div className="d-flex flex-md-column my-2">
+            <div>
+              <input
+                type="radio"
+                className="btn-check"
+                name="options"
+                id="option1"
+                autoComplete="off"
+              />
+              <label
+                className="btn btn-reverse"
+                htmlFor="option1"
+                onClick={() => categoryField("All")}
+              >
+                All
+              </label>
+            </div>
 
-            <input
-              type="radio"
-              className="btn-check"
-              name="options"
-              id="option2"
-              autoComplete="off"
-            />
-            <label
-              className="btn"
-              htmlFor="option2"
-              onClick={() => categoryField("Accessories")}
-            >
-              Accessories
-            </label>
+            <div>
+              <input
+                type="radio"
+                className="btn-check"
+                name="options"
+                id="option4"
+                autoComplete="off"
+              />
+              <label
+                className="btn"
+                htmlFor="option4"
+                onClick={() => categoryField("Women")}
+              >
+                Women
+              </label>
+            </div>
 
-            <input
-              type="radio"
-              className="btn-check"
-              name="options"
-              id="option3"
-              autoComplete="off"
-            />
-            <label
-              className="btn"
-              htmlFor="option3"
-              onClick={() => categoryField("Men")}
-            >
-              Men
-            </label>
+            <div>
+              <input
+                type="radio"
+                className="btn-check"
+                name="options"
+                id="option3"
+                autoComplete="off"
+              />
+              <label
+                className="btn"
+                htmlFor="option3"
+                onClick={() => categoryField("Men")}
+              >
+                Men
+              </label>
+            </div>
 
-            <input
-              type="radio"
-              className="btn-check"
-              name="options"
-              id="option4"
-              autoComplete="off"
-            />
-            <label
-              className="btn"
-              htmlFor="option4"
-              onClick={() => categoryField("Women")}
-            >
-              Women
-            </label>
+            <div>
+              <input
+                type="radio"
+                className="btn-check"
+                name="options"
+                id="option2"
+                autoComplete="off"
+              />
+              <label
+                className="btn"
+                htmlFor="option2"
+                onClick={() => categoryField("Accessories")}
+              >
+                Accessories
+              </label>
+            </div>
           </div>
         </div>
 
