@@ -15,7 +15,7 @@ export const CartPage = () => {
   useEffect(() => {
     const fetchCartItems = async () => {
       if (jwt) {
-        const url = `http://localhost:8080/api/cartItems`;
+        const url = `${process.env.REACT_APP_API}/cartItems`;
         const requestOptions = {
           method: "GET",
           headers: {
@@ -66,7 +66,7 @@ export const CartPage = () => {
   }
 
   async function deleteCartItem(cartItemId: number) {
-    const url = `http://localhost:8080/api/cartItems/${cartItemId}`;
+    const url = `${process.env.REACT_APP_API}/cartItems/${cartItemId}`;
     const requestOptions = {
       method: "DELETE",
       headers: {

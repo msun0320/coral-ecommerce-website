@@ -5,7 +5,7 @@ import com.mingyuesun.springbootecommerce.requestmodels.InventoryRequest;
 import com.mingyuesun.springbootecommerce.service.InventoryService;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("https://localhost:3000")
 @RestController
 @RequestMapping("/api/inventories")
 public class InventoryController {

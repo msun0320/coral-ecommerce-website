@@ -24,7 +24,7 @@ export const RegisterPage = () => {
       password
     );
 
-    const url = "http://localhost:8080/api/auth/register";
+    const url = `${process.env.REACT_APP_API}/api/auth/register`;
     const requestOptions = {
       method: "POST",
       headers: {

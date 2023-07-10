@@ -20,7 +20,9 @@ export const ReviewListPage = () => {
 
   useEffect(() => {
     const fetchProductReviewsData = async () => {
-      const reviewUrl: string = `http://localhost:8080/api/reviews/product/${productId}?page=${
+      const reviewUrl: string = `${
+        process.env.REACT_APP_API
+      }/reviews/product/${productId}?page=${
         currentPage - 1
       }&size=${reviewsPerPage}`;
 

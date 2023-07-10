@@ -13,7 +13,7 @@ export const LoginPage = () => {
     e.preventDefault();
 
     const loginRequestModel = new LoginRequestModel(username, password);
-    const url: string = "http://localhost:8080/api/auth/login";
+    const url: string = `${process.env.REACT_APP_API}/auth/login`;
     const requestOptions = {
       method: "POST",
       headers: {

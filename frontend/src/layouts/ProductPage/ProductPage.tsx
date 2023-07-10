@@ -30,7 +30,7 @@ export const ProductPage = () => {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const baseUrl: string = `http://localhost:8080/api/products/${productId}`;
+      const baseUrl: string = `${process.env.REACT_APP_API}/products/${productId}`;
 
       const response = await fetch(baseUrl);
 
@@ -52,7 +52,7 @@ export const ProductPage = () => {
       setProduct(loadedProduct);
 
       // Get inventory
-      const url: string = `http://localhost:8080/api/inventories/product/${productId}`;
+      const url: string = `${process.env.REACT_APP_API}/inventories/product/${productId}`;
 
       const responseInventory = await fetch(url);
 
@@ -74,7 +74,7 @@ export const ProductPage = () => {
 
   useEffect(() => {
     const fetchProductReviews = async () => {
-      const reviewUrl: string = `http://localhost:8080/api/reviews/product/${productId}`;
+      const reviewUrl: string = `${process.env.REACT_APP_API}/reviews/product/${productId}`;
 
       const responseReviews = await fetch(reviewUrl);
 
@@ -154,7 +154,7 @@ export const ProductPage = () => {
       return;
     }
 
-    const url = "http://localhost:8080/api/cartItems";
+    const url = `${process.env.REACT_APP_API}/cartItems`;
     const requestOptions = {
       method: "POST",
       headers: {
@@ -187,7 +187,7 @@ export const ProductPage = () => {
       productId,
       reviewDescription
     );
-    const url = "http://localhost:8080/api/reviews";
+    const url = `${process.env.REACT_APP_API}/api/reviews`;
     const requestOptions = {
       method: "POST",
       headers: {
@@ -226,7 +226,7 @@ export const ProductPage = () => {
               {inventory > 0 ? (
                 <span className="text-success ms-3">In Stock</span>
               ) : (
-                <span className="text-danger">Out of Stock</span>
+                <span className="text-danger ms-3">Out of Stock</span>
               )}
             </p>
             <p>{product?.description}</p>

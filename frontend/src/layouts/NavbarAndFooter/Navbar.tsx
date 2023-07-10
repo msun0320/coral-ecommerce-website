@@ -15,7 +15,7 @@ export const Navbar = () => {
   useEffect(() => {
     const fetchCartItemsCount = async () => {
       if (jwt) {
-        const url = `http://localhost:8080/api/cartItems/count`;
+        const url = `${process.env.REACT_APP_API}/cartItems/count`;
         const requestOptions = {
           method: "GET",
           headers: {
