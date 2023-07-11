@@ -2,10 +2,9 @@ package com.mingyuesun.springbootecommerce.service;
 
 import com.mingyuesun.springbootecommerce.dao.CartItemRepository;
 import com.mingyuesun.springbootecommerce.dao.InventoryRepository;
+import com.mingyuesun.springbootecommerce.dao.PaymentRepository;
 import com.mingyuesun.springbootecommerce.dao.ProductRepository;
-import com.mingyuesun.springbootecommerce.entity.CartItem;
-import com.mingyuesun.springbootecommerce.entity.Inventory;
-import com.mingyuesun.springbootecommerce.entity.User;
+import com.mingyuesun.springbootecommerce.entity.*;
 import com.mingyuesun.springbootecommerce.requestmodels.CartItemRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +22,13 @@ public class CartItemService {
 
     private InventoryRepository inventoryRepository;
 
-    public CartItemService(ProductRepository productRepository, CartItemRepository cartItemRepository, InventoryRepository inventoryRepository) {
+    private PaymentRepository paymentRepository;
+
+    public CartItemService(ProductRepository productRepository, CartItemRepository cartItemRepository, InventoryRepository inventoryRepository, PaymentRepository paymentRepository) {
         this.productRepository = productRepository;
         this.cartItemRepository = cartItemRepository;
         this.inventoryRepository = inventoryRepository;
+        this.paymentRepository = paymentRepository;
     }
 
     public List<CartItem> getCartItems(User user) {
@@ -58,6 +60,18 @@ public class CartItemService {
         inventory.setQuantity(inventory.getQuantity() - cartItemRequest.getQuantity());
         inventoryRepository.save(inventory);
 
+        Payment payment = paymentRepository.findByUser(user);
+
+        if (payment == null) {
+            payment = new Payment();
+            payment.setAmount(inventory.getProduct().getPrice());
+            payment.setUser(user);
+        } else {
+            payment.setAmount(payment.getAmount() + inventory.getProduct().getPrice());
+        }
+
+        paymentRepository.save(payment);
+
         CartItem cartItem = cartItemRepository.findByUserAndProduct(user, inventory.getProduct());
 
         if (cartItem != null) {
@@ -81,12 +95,16 @@ public class CartItemService {
 
         CartItem cartItem = cartItemRepository.findByUserAndProduct(user, inventory.getProduct());
 
+        Payment payment = paymentRepository.findByUser(user);
+        payment.setAmount(payment.getAmount() - inventory.getProduct().getPrice() * (cartItem.getQuantity() - cartItemRequest.getQuantity()));
+        paymentRepository.save(payment);
+
         cartItem.setQuantity(cartItemRequest.getQuantity());
 
         return cartItemRepository.save(cartItem);
     }
 
-    public void deleteCartItem(Long cartItemId) throws Exception {
+    public void deleteCartItem(User user, Long cartItemId) throws Exception {
         Optional<CartItem> cartItem = cartItemRepository.findById(cartItemId);
 
         if (!cartItem.isPresent()) {
@@ -97,6 +115,10 @@ public class CartItemService {
 
         inventory.setQuantity(inventory.getQuantity() + cartItem.get().getQuantity());
         inventoryRepository.save(inventory);
+
+        Payment payment = paymentRepository.findByUser(user);
+        payment.setAmount(payment.getAmount() - inventory.getProduct().getPrice() * cartItem.get().getQuantity());
+        paymentRepository.save(payment);
 
         cartItemRepository.delete(cartItem.get());
 

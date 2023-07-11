@@ -13,6 +13,7 @@ import EventBus from "./common/EventBus";
 import { CartPage } from "./layouts/CartPage/CartPage";
 import { AboutPage } from "./layouts/AboutPage/AboutPage";
 import { ContactPage } from "./layouts/ContactPage/ContactPage";
+import { PaymentPage } from "./layouts/PaymentPage/PaymentPage";
 
 export const App = () => {
   useEffect(() => {
@@ -61,6 +62,9 @@ export const App = () => {
           </Route>
           <Route path="/cart">
             <CartPage />
+          </Route>
+          <Route path="/checkout">
+            <PaymentPage />
           </Route>
         </Switch>
       </div>

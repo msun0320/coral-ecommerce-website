@@ -24,7 +24,7 @@ export const RegisterPage = () => {
       password
     );
 
-    const url = `${process.env.REACT_APP_API}/api/auth/register`;
+    const url = `${process.env.REACT_APP_API}/auth/register`;
     const requestOptions = {
       method: "POST",
       headers: {

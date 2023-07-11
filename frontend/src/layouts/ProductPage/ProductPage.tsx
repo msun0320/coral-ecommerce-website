@@ -10,7 +10,7 @@ import CartItemRequestModel from "../../models/CartItemRequestModel";
 import { Link, useHistory } from "react-router-dom";
 
 export const ProductPage = () => {
-  const [jwt, setJwt] = useState(localStorage.getItem("jwt"));
+  const [jwt, setJwt] = useState(JSON.parse(localStorage.getItem("jwt") || ""));
   const [product, setProduct] = useState<ProductModel>();
   const [inventory, setInventory] = useState(0);
   const [quantity, setQuantity] = useState(1);
@@ -187,7 +187,7 @@ export const ProductPage = () => {
       productId,
       reviewDescription
     );
-    const url = `${process.env.REACT_APP_API}/api/reviews`;
+    const url = `${process.env.REACT_APP_API}/reviews`;
     const requestOptions = {
       method: "POST",
       headers: {
@@ -209,7 +209,7 @@ export const ProductPage = () => {
         <div className="row">
           <div className="col-md-6 d-flex justify-content-center align-items-center">
             {product?.img ? (
-              <img className="w-auto" src={product?.img} alt={product?.name} />
+              <img src={product?.img} alt={product?.name} />
             ) : (
               <img
                 src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"

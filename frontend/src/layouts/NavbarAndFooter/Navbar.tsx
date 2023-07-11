@@ -5,7 +5,7 @@ import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import { useEffect, useState } from "react";
 
 export const Navbar = () => {
-  const [jwt, setJwt] = useState(localStorage.getItem("jwt"));
+  const [jwt, setJwt] = useState(JSON.parse(localStorage.getItem("jwt") || ""));
   const [httpError, setHttpError] = useState(null);
 
   // Cart Items Count State

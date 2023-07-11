@@ -26,7 +26,7 @@ public class CartItemController {
     }
 
     @GetMapping("/{cartItemId}")
-    public CartItem getCartItem(@PathVariable Long cartItemId) throws Exception {
+    public CartItem getCartItem(@PathVariable("cartItemId") Long cartItemId) throws Exception {
         return cartItemService.getCartItem(cartItemId);
     }
 
@@ -49,8 +49,9 @@ public class CartItemController {
     }
 
     @DeleteMapping("/{cartItemId}")
-    public void deleteCartItem(@PathVariable("cartItemId") Long cartItemId) throws Exception {
-        cartItemService.deleteCartItem(cartItemId);
+    public void deleteCartItem(@AuthenticationPrincipal User user,
+                               @PathVariable("cartItemId") Long cartItemId) throws Exception {
+        cartItemService.deleteCartItem(user, cartItemId);
     }
 
 }

@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { SpinnerLoading } from "../Utils/SpinnerLoading";
 import CartItemModel from "../../models/CartItemModel";
 import EventBus from "../../common/EventBus";
+import { Link } from "react-router-dom";
 
 export const CartPage = () => {
-  const [jwt, setJwt] = useState(localStorage.getItem("jwt"));
+  const [jwt, setJwt] = useState(JSON.parse(localStorage.getItem("jwt") || ""));
   const [httpError, setHttpError] = useState(null);
 
   const [cartItems, setCartItems] = useState<CartItemModel[]>([]);
   const [isLoadingCartItems, setIsLoadingCartItems] = useState(true);
   const [total, setTotal] = useState(0);
+  const [loadingTotal, setLoadingTotal] = useState(true);
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -28,16 +29,6 @@ export const CartPage = () => {
           throw new Error("Something went wrong!");
         }
         const cartItemsResponseJson = await cartItemsResponse.json();
-
-        let subtotal = 0;
-
-        for (const key in cartItemsResponseJson) {
-          subtotal +=
-            cartItemsResponseJson[key].product.price *
-            cartItemsResponseJson[key].quantity;
-        }
-
-        setTotal(subtotal);
         setCartItems(cartItemsResponseJson);
       }
       setIsLoadingCartItems(false);
@@ -50,6 +41,31 @@ export const CartPage = () => {
         EventBus.dispatch("logout", null);
       }
     });
+
+    const fetchTotal = async () => {
+      if (jwt) {
+        const url = `${process.env.REACT_APP_API}/payments/user`;
+        const requestOptions = {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${jwt}`,
+            "Content-Type": "application/json",
+          },
+        };
+        const paymentResponse = await fetch(url, requestOptions);
+        if (!paymentResponse.ok) {
+          throw new Error("Somgthing went wrong!");
+        }
+        const paymentResponseJson = await paymentResponse.json();
+        setTotal(paymentResponseJson.amount);
+        setLoadingTotal(false);
+      }
+    };
+    fetchTotal().catch((error: any) => {
+      setLoadingTotal(false);
+      setHttpError(error.message);
+    });
+
     window.scrollTo(0, 0);
   }, [jwt]);
 
@@ -122,7 +138,12 @@ export const CartPage = () => {
                 </div>
               </div>
             ))}
-            <p className="font-weight-bold">Total: ${total}</p>
+            <div className="d-flex flex-column align-items-end">
+              <p className="font-weight-bold">Total: ${total}</p>
+              <Link to="/checkout" className="btn">
+                Checkout
+              </Link>
+            </div>
           </div>
         )}
       </div>
